@@ -1,6 +1,6 @@
 <?php
 	
 	Route::get('route1',function(){
-		return view('login_sup.login');
+		return view('test');
 })->name('MyRoute');
 	
