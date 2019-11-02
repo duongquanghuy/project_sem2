@@ -16,7 +16,7 @@ class CreateCustomer extends Migration
         Schema::create('customer', function (Blueprint $table) {
             $table->bigIncrements('customer_id');
             $table->string('customer_fullname')->length(250);
-            $table->double('customer_phone')->length(15);
+            $table->string('customer_phone')->length(20);
             
         });
     }

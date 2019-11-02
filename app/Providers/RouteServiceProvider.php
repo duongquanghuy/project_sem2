@@ -39,7 +39,7 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapWebRoutes();
 
-        $this->mapAupermarketApiRoutes();
+        $this->mapSupermarketApiRoutes();
 
 
    
@@ -79,7 +79,7 @@ class RouteServiceProvider extends ServiceProvider
 
 
     // LOGIN USER
-     protected function mapAupermarketApiRoutes()
+     protected function mapSupermarketApiRoutes()
     {
         Route::prefix('supermarket')
              ->middleware('api')
