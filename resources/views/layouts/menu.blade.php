@@ -36,12 +36,14 @@
             </ul>
           </li>
           <li class="panel">
-            <a id="panel5" href="javascript:;" data-toggle="collapse" data-target="#edit"> <i class="fa fa-edit"></i> edit
+            <a id="panel5" href="javascript:;" data-toggle="collapse" data-target="#edit"> <i class="fa fa-user"></i> Customer
               <i class="fa fa fa-chevron-left pull-right" id="arow5"></i>
             </a>
             <ul class="collapse nav" id="edit">
-              <li> <a href="#"><i class="fa fa-angle-double-right"></i> Flot Charts</a> </li>
-              <li> <a href="#"><i class="fa fa-angle-double-right"></i> Morris.js</a> </li>
+              <li> 
+                <a href="{{ route('displayCus') }}"><i class="fa fa-angle-double-right"></i> List Customer </a>
+              </li>
+             
             </ul>
           </li>
           <li class="panel">
