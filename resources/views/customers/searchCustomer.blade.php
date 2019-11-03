@@ -24,7 +24,6 @@
 		.input-group{
 			margin: 0 auto;-
 		}
-	
 
 	</style>
 	
@@ -36,8 +35,6 @@
 
 @stop
 @section('container-fluid')
-
-
 <!-- Modal -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: auto">
@@ -50,9 +47,8 @@
       </div>
       	<!-- phan sua thong tin -->
       <div class="modal-body">
-      	<div class="form-group" style="">
+      	<div class="form-group" style="display: none;">
 			<input type="text" name="cus_id" id="cus-id">
-		
       	 </div>
        	<div class="form-group" >
 
@@ -72,7 +68,7 @@
  
       			<div class="input-group othertop">
        				<div class="input-group-addon">
-    		 			<i class="fa fa-mobile fa-1x" style="font-size: 20px;"></i>
+    		 			<i class="fa fa-mobile fa-1x"  style="font-size: 20px;"></i>
         
       				</div>
    					<input id="Phone-number" name="Secondary Phone number " type="number" placeholder=" Secondary Phone number " class="form-control input-md">
@@ -90,29 +86,21 @@
     </div>
   </div>
 </div>
+
 <!-- phan homeword -->
 <div class="row">
-            <div class="col-md-4">
+           <div class="col-md-4">
             <ul class="breadcrumb">
-            <li><i class="fa fa-home"></i><a href="#"> Home</a></li>
-            <li class="active"><a href="{{ route('displayCus') }}">Customer</a></li>
-          </ul>
-            </div>
-            <div class="col-md-8">
-            <ul class="list-inline pull-right mini-stat">
-              <li>
-
-                <h5>CUSTOMERS <span class="stat-value color-orang"><i class="fa fa-plus-circle"></i>
-                 {{ $customerListCount }}</span></h5>
-                
-              </li>
-            </ul>
-            </div>
+           		<li><i class="fa fa-home"></i><a href="#"> Home</a></li>
+            	<li class="active"><a href="{{ route('displayCus') }}">Customer</a></li>
+            	<li><i class="fa "></i><a href="#">search</a></li>
+          	</ul>
+           </div>
+        
 </div>
 <!-- het phan homeword -->
 <div class="container">
-	
-    <div class="row">
+	 <div class="row">
         <div class="col-md-6 col-md-offset-3">
         </div>
     </div>
@@ -143,7 +131,7 @@
 	                    <th>full Name</th>
 	                    <th>phone number</th>
 	                    <th>Edit</th>
-	               		<th>  </th>
+	               		<th> </th>
                    </thead>
     				<tbody id="customerList">
 						@foreach($customerList as $iteme)
@@ -153,11 +141,8 @@
 			                        <td>{{ $iteme->customer_fullname }} </td>
 			                        <td>{{ $iteme->customer_phone }}  </td>
 			                        <td>
-			                        	<p data-placement="top" data-toggle="tooltip" title="Edit">
-			                        		<button onclick="editCustomerId({{ $iteme->customer_id }})" class="btn btn-primary btn-xs" data-target="#exampleModalCenter" data-title="Edit" data-toggle="modal" data-target="#edit" >
-			                        			<span class="glyphicon glyphicon-pencil"></span>
-			                        		</button>
-			                        	</p>
+			                        	<p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" 
+			                        	onclick="editCustomerId({{ $iteme->customer_id }})" data-target="#exampleModalCenter" ><span class="glyphicon glyphicon-pencil"></span></button></p>
 			                        </td>
     								<td> </td>
 			                         
@@ -174,7 +159,7 @@
 @stop
 @section('js')
 	<script type="text/javascript">
-		function checkCustomer(){
+	 	function checkCustomer(){
 			var idCus = $("#cus-id").val();
       		var phonenum = $('#Phone-number').val();
       		var fullname = $("#full-Name").val();
@@ -212,9 +197,7 @@
         });
       
       }
-    
-		
-	function editCustomerId(id){
+		function editCustomerId(id){
 			$.post('{{ route('vieweditCustomerID') }}' ,{
            		"_token": "{{ csrf_token() }}",
             	id: id
@@ -227,7 +210,7 @@
             		});
         	});
 
-	}
+		}
 	 $('#search').keypress(function(event) {
 	 	var keycode = (event.keyCode ? event.keyCode : event.which);
 	 	var search = $('#search').val();
@@ -240,8 +223,6 @@
        	   
     	}
 	 });
-
-
 
 
 
