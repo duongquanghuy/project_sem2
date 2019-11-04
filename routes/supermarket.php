@@ -20,5 +20,10 @@
 
 	});
 
+	Route::group(['prefix' => '/employees'], function(){
+
+		Route::get('viewEmps', 'employeesController@viewEmployees')->name('viewEmployees');
+	});
+
 
 	
