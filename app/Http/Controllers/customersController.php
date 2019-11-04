@@ -24,16 +24,30 @@ class customersController extends Controller
         $data = DB::table('customer')
                             ->where('customer_phone' , $request->phonenum)
                             ->get();
-
-        if (count($data) == 1) {
-            $status = "so dien thoai da ton tai hoac ban chua chinh sua gi het";
-         
-        }else{
-             DB::table('customer')
+     
+        foreach ($data as $item) {
+        
+            
+            if($item->customer_fullname != $request->fullname && $item->customer_id == $id){
+                DB::table('customer')
                         ->where('customer_id' ,$id)
                         ->update($cus);
-            $status = "cap nhat thanh cong";
+                $status = "cap nhat thanh cong fullname";
+            }else if ($item->customer_phone == $request->phonenum && $item->customer_id == $id) {
+                $status = "ban chua chinh sua gi het";
+         
+            }else{
+                $status = "so dien thoai da ton tai";
+            }
+
         }
+        if (count($data) == 0) {
+               DB::table('customer')
+                        ->where('customer_id' ,$id)
+                        ->update($cus);
+                $status = "cap nhat thanh cong phone";
+        }
+      
   		
         return $status;
 
