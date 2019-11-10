@@ -51,10 +51,9 @@
       	<!-- phan sua thong tin -->
       <div class="modal-body">
       	<div class="form-group" style="">
-			<input type="text" name="cus_id" id="cus-id">
-		
-      	 </div>
-       	<div class="form-group" >
+			         <input type="text" name="cus_id" id="cus-id">
+      	</div>
+      <div class="form-group" >
 
  			<label class="col-md-4 control-label" for="full-Name">Name (Full name)</label>  
   			<div class="col-md-12">
@@ -66,21 +65,20 @@
      			 </div>
  			</div>
 		</div>
-		<div class="form-group" >
-  			<label class="col-md-4 control-label" for="Phone-number ">Phone number </label>  
-  			<div class="col-md-12">
+		  <div class="form-group" >
+  			 <label class="col-md-4 control-label" for="Phone-number ">Phone number </label>  
+  			 <div class="col-md-12">
  
       			<div class="input-group othertop">
        				<div class="input-group-addon">
-    		 			<i class="fa fa-mobile fa-1x" style="font-size: 20px;"></i>
+    		 			    <i class="fa fa-mobile fa-1x" style="font-size: 20px;"></i>
         
       				</div>
-   					<input id="Phone-number" name="Secondary Phone number " type="number" placeholder=" Secondary Phone number " class="form-control input-md">
-    
-     			</div>
+   					  <input id="Phone-number" name="Secondary Phone number " type="number" placeholder=" Secondary Phone number " class="form-control input-md">
+     			  </div>
   
- 			</div>
-		</div>
+ 			    </div>
+		    </div>
       </div>
       	<!-- het sua thong tin -->
       <div class="modal-footer">
@@ -215,6 +213,7 @@
     
 		
 	function editCustomerId(id){
+      
 			$.post('{{ route('vieweditCustomerID') }}' ,{
            		"_token": "{{ csrf_token() }}",
             	id: id

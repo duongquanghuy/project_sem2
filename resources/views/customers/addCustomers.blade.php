@@ -87,7 +87,7 @@
        function summitCustomer(){
           var phone_number = $('.phone-number').val();
 
-          
+          console.log(phone_number);
           
           $.post('{{ route('viewPostPhone') }}', {
             "_token": "{{ csrf_token() }}",

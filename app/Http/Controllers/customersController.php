@@ -14,6 +14,7 @@ class customersController extends Controller
 
     public function viewPostPhones(Request $request){
         $id   = $request->idCus;
+
     	$status = '';
 
         $cus = [
@@ -28,11 +29,12 @@ class customersController extends Controller
         foreach ($data as $item) {
         
             
-            if($item->customer_fullname != $request->fullname && $item->customer_id == $id){
+            if($item->customer_fullname != $request->fullname && $item->customer_id == $id && $item->customer_phone == $request->phonenum){
                 DB::table('customer')
                         ->where('customer_id' ,$id)
                         ->update($cus);
                 $status = "cap nhat thanh cong fullname";
+
             }else if ($item->customer_phone == $request->phonenum && $item->customer_id == $id) {
                 $status = "ban chua chinh sua gi het";
          
@@ -54,26 +56,19 @@ class customersController extends Controller
     }
 
     public function viewAddCustomer(Request $request){
-        $id = $request->idCus;
+      
 
     	$data = [
             'customer_fullname' =>$request->fullname,
             'customer_phone'    =>$request->phonenum,
         ];
 
-        if (isset($id) && $id > 0) {
-            //update
-                DB::table('customer')
-                        ->where('customer_id' ,$id)
-                        ->update($data);
-
-        }else{
             //insert
-            DB::table('customer')->insert($data);
-        }
-    
+        DB::table('customer')->insert($data);
 
+        $dataCustomer =  Db::table('customer')->where('customer_phone',$request->phonenum)->get(); 
 
+        return $dataCustomer; 
     }
     public function displayCustomer(Request $request){
 
