@@ -19,11 +19,27 @@
 
 
 	});
-
+	// nhan vien
 	Route::group(['prefix' => '/employees'], function(){
 
-		Route::get('viewEmps', 'employeesController@viewEmployees')->name('viewEmployees');
+		Route::get('/viewEmps', 'employeesController@viewEmployees')->name('viewEmployees');
 	});
+	// don hang
 
+	Route::group(['prefix' => '/orders'], function(){
+
+		Route::get('/viewOrder', 'orderContronller@viewAddOrders')->name('viewAddOrders');
+
+		// them don hang
+		Route::get('/addProduct', 'orderContronller@viewAddProduct')->name('viewAddProduct');
+
+		Route::post('/checkPhone', 'orderContronller@viewOrderPostPhone')->name('viewOrderPostPhone');
+		// gui du lieu don hang len sever
+		Route::post('/OrderPost', 'orderContronller@viewOrderPostProduct')->name('viewOrderPostProduct');
+
+
+    
+
+	});
 
 	
