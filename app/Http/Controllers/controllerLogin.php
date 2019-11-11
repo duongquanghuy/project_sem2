@@ -1,0 +1,39 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Auth;
+use DB;
+class ControllerLogin extends Controller
+{
+    public function handlerLogin(Request $request){
+        $request->validate([
+            'email' => 'required | email',
+            'password' => 'required | min : 8 | max : 32'
+        ], [
+            'email.required' => 'You must enter an email',
+            'email.email' => 'Email invalidate',
+            'password.required' => 'You must enter a password',
+            'password.min' => 'Password must be more than 8 characters',
+            'password.max' => 'Password must be less than 32 characters'
+        ]);
+        $remember = $request->has('remember') ? true : false;
+        if(Auth::attempt(['email'=>$request->email, 'password'=>$request->password], $remember)){
+            return redirect('/admin/test');
+        }else{  
+            return redirect()->back()->with('status', 'You have entered the wrong email or password');
+        }
+    }
+
+    public function handlerLogout(){
+        Auth::logout();
+        return redirect('/admin/login');
+    }
+}
+
+/* Nut dang xuat
+    @if(Auth::check())
+        <li><a href={{ route('handler-logout')}}>Logout</a></li>
+    @endif
+ */

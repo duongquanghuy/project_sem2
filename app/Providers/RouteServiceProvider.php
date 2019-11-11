@@ -41,8 +41,7 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapSupermarketApiRoutes();
 
-
-   
+        $this-> mapRouteLogin();
 
       
         //
@@ -85,6 +84,13 @@ class RouteServiceProvider extends ServiceProvider
              ->middleware('api')
              ->namespace($this->namespace)
              ->group(base_path('routes/supermarket.php'));
+    }
+
+    protected function mapRouteLogin()
+    {
+        Route::middleware('web')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/routeLogin.php'));
     }
   
 }
