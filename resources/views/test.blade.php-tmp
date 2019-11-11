@@ -3,4 +3,4 @@
   @if(isset($user))
     {{$user->name}}
   @endif
-@endif 
+@endif
