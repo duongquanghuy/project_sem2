@@ -37,9 +37,9 @@
 		// gui du lieu don hang len sever
 		Route::post('/OrderPost', 'orderContronller@viewOrderPostProduct')->name('viewOrderPostProduct');
 
+		Route::get('/printOrder', 'orderContronller@printOrderID')->name('printOrderID');
 
-    
-
+		
 	});
 
 	

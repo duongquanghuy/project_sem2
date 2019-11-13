@@ -11,6 +11,9 @@
    .modal-body{
     height: 150px;
    }
+   .modal-body-printorder{
+      height: 80px;
+   }
    .input-left{
     text-align: left;
    }.product-id-label{
@@ -19,6 +22,15 @@
    #phone_number{
       border-radius: 0 5px 5px 0 ;
    }
+   #fullnameCustomer{
+      color: green;
+   }
+  @media only screen and (max-width: 900px) {
+    .modal-body-printorder{
+      height: 100px;
+    }
+  }
+    
 
 	</style>
 	
@@ -30,7 +42,73 @@
 
 @stop
 @section('container-fluid')
-  
+
+<!-- note -->
+<!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Overview (max 200 words)</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+   
+       
+          <textarea placeholder="note" class="form-control" rows="10" value="note"  id="OverviewNote" name="Overview"></textarea>
+    
+      <div class="modal-footer" style="border: none;">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- in hoa don -->
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenterInOrder" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: auto">
+    <div class="modal-content">
+      <div class="modal-header" >
+        <h5 class="modal-title " id="exampleModalLongTitleInOrder">Edit Customer</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+        <!-- phan sua thong tin -->
+      <div class="modal-body-printorder"  >
+          
+            
+          <div class="form-group" >
+              <label style="text-align: center;" class="col-md-12 control-label" >Print order customer <em id="fullnameCustomer" ></em></label>
+          </div>
+          <div class="form-group" >
+              <label style="text-align: center;" class="col-md-12 control-label" >Order ID <em id="orderIdlabel"></em></label>
+          </div>
+      </div>
+        <!-- het sua thong tin -->
+      <div class="modal-footer">
+          
+          <form method="get" action="{{ route('printOrderID') }}">
+              {{ csrf_field() }}
+             
+              <div class="table-wrapper" style="display: inline-block;">
+                    <div class="form-group" style="display: none;">
+                      <input  type="number" name="orderId" class="form-control"  value="" id="orderId">
+                    </div>
+                    <button onclick="deleteOrder()" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button class="btn btn-success">Print</button>
+              </div>
+          </form>
+     
+      </div>
+     
+    </div>
+  </div>
+</div>
 <!-- phan khach them khach hang -->
 <!-- Modal -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -45,20 +123,20 @@
         <!-- phan sua thong tin -->
       <div class="modal-body">
         <div class="form-group">
-      <input type="text" name="cus_id" id="cus-id">
+             <input type="text" name="cus_id" id="cus-id">
          </div>
         <div class="form-group" >
 
-      <label class="col-md-4 control-label" for="full-Name">Name (Full name)</label>  
+         <label class="col-md-4 control-label" for="full-Name">Name (Full name)</label>  
         <div class="col-md-12">
-        <div class="input-group">
-            <div class="input-group-addon">
+            <div class="input-group">
+              <div class="input-group-addon">
               <i class="fa fa-user"></i>
             </div>
               <input id="full-Name" name="Name" type="text" placeholder="Name (Full name)" class="form-control input-md">
            </div>
+       </div>
       </div>
-    </div>
     <div class="form-group" >
         <label class="col-md-4 control-label" for="Phone-number ">Phone number </label>  
         <div class="col-md-12">
@@ -153,7 +231,7 @@
     <div class="row">
       <div class="form-group" >
 
-            <label  class="col-md-3 control-label" for="phone_number">Phone number (phon customer)</label>  
+            <label  class="col-md-3 control-label" for="phone_number">Phone number (phone customer)</label>  
             <div class="col-md-4" style="margin-top: 10px">
  
               <div class="input-group othertop">
@@ -161,19 +239,28 @@
                      <i class="fa fa-user fa-1x" style="font-size: 20px;"></i>
                   </div>
                   <input style="max-width: 500px" id="phone_number" name="phone-number" type="number" placeholder="phone (phone number )" class="form-control input-md" value="">
-                  <input style="" class="customer_id"   value="">
+                  <input style="display: none;" style="" class="customer_id"   value="">
               </div>
   
             </div>
-          <div class="col-md-2" style="margin-top: 10px">
+          <div class="col-md-1" style="margin-top: 10px">
               <div class="input-group othertop" >
               
                     <button  id="submit" onclick="summitCustomer()" class="btn" type="button" 
                     data-target="" data-title="Edit" data-toggle="modal" >submit</button>
               </div>
           </div>
+          <div class="col-md-2" style="margin-top: 10px">
+              <div class="input-group othertop" >
+              
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                     Note
+                    </button>
+              </div>
+          </div>
          
         </div>
+
 
      
  
@@ -185,22 +272,26 @@
            <h4><small style="font-size: 16px">Simple With Actions</small></h4>
           <div class="table-responsive">
               
-              <table  class="table table-striped custab">
+              <table  class="table table-striped custab table-hover">
                    <thead>
                       <th class="text-center">#</th>
                       <th>Product ID</th>
                       <th>Product Name</th>
                       <th style="text-align: center;">Quantity Product</th>
-                      <th>total price(đ)</th>
-                      <th>original price(%)</th>
+                      <th>total price(Vnđ)</th>
+                      <th class="col-md-2" style="text-align: center;">Discount Product(%)</th>
+                      <th>Price(1/1)(Vnđ)</th>
                       <th class="text-right">Actions</th>
                     <th> </th>
                    </thead>
-               <tbody id="productList">
+                <tbody id="productList" >
                   
                 </tbody>
           </table>
+
+           
         </div>
+
         <div class="row" >
               <div class="col-md-10"></div>
               <div id="total" class="col-md-2"   >
@@ -210,11 +301,18 @@
           
 
         </div>
+       
+        
       </div>
    </div>
+   
 @stop
 @section('js')
+  
 	<script type="text/javascript">
+          
+       
+          
           var productList = [];
           var productQuantity = [];
           
@@ -230,6 +328,7 @@
             var product_id = $('#product-id').val();
             var quantity = $('#quantity').val();
             var total = $('#total').val();
+
             //
         if(keycode == '13'){
              var vnf_regex = /^[A-Z0-9_-]{3,16}$/;
@@ -279,7 +378,7 @@
                              
                               productList.push(data);
                               var  array = [];
-                             
+                              
                               $.each(data,  function(index, el) {
                                   // them so luong
                                   var price =  el.price ;
@@ -289,20 +388,26 @@
 
                                   console.log(discount_price);
 
-                                  var totalPirice = discount_price * quantity ;
-                    
-                                   array = {
+                                  var totalPirice = Number(discount_price) * Number(quantity) ;
+                                 
+                                  array = {
                                         product_id: el.product_id,
-                                        quantity: quantity,
+                                        quantity: Number(quantity),
                                         price: price,
                                         totalPirice: totalPirice,
                                         discount: discount,
+
                                    };
                                    productQuantity.push(array) ;
                                    console.log(productQuantity);
                                 // 
                               
-                                 $('tbody').append('<tr id="item'+el.product_id+'">  <td class="indexItem"></td><td>'+ el.product_id +'</td><td>'+ el.product_name +'</td><td><div style="text-align: center" id="pro'+el.product_id+'">'+quantity+'</div><td ><div id="price'+el.product_id+'">'+totalPirice+'</div></td><td class="text-right"><from><input style="display:none" id="'+el.product_id+'" value="'+el.product_id+'" ><button onclick="editProductItem('+el.product_id+')" type="button" style="margin-right: 10px" class="btn btn-success"><span class="glyphicon glyphicon-pencil"></span</button><button onclick="deleteProductItem('+el.product_id+')" type="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></button></from></td></tr>');
+                                var stringprices = formatNumber(el.price);
+                                var stringtotalPirices = formatNumber(totalPirice);
+                              $('tbody').append('<tr id="item'+el.product_id+'">  <td class="indexItem"></td><td>'+ el.product_id +'</td><td>'+ el.product_name +'</td><td><div style="text-align: center" id="pro'+el.product_id+'">'+quantity+'</div><td ><div id="price'+el.product_id+'">'+stringtotalPirices+'</div></td><td><p style="text-align: center">'+
+                                el.discount_product +'</p></td><td >'+stringprices+'</td><td class="text-right"><from><input style="display:none" id="'+el.product_id+'" value="'+el.product_id+'" ><button onclick="editProductItem('+el.product_id+')" type="button" style="margin-right: 10px" class="btn btn-success"><span class="glyphicon glyphicon-pencil"></span</button><button onclick="deleteProductItem('+el.product_id+')" type="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></button></from></td></tr>');
+
+
                               });
 
                               totalQuantityproduct();
@@ -359,20 +464,26 @@
 
                               var totalPirice = discount_price * quantity ;
                               totals = totalPirice;
-                              $('#total').html('<span>tong tien </span><span></span>'+totals+'<span> Vnđ</span><input id="totalProducts" name="totalProducts" value="'+totals+'">');
+                              var stringTotal = formatNumber(totals) ; 
+                              $('#total').html('<span>tong tien </span><span></span>'+stringTotal+'<span> Vnđ</span><input id="totalProducts" name="totalProducts" value="'+totals+'">');
                               console.log(totalPirice);
                               // them so luong
                               array = {
                                         product_id: el.product_id,
-                                        quantity: quantity,
+                                        quantity: Number(quantity),
                                         price: price,
                                         totalPirice: totalPirice,
                                         discount: discount,
+                                      
                                    };
                               productQuantity.push(array) ;
                               console.log(productQuantity);
+                              console.log(productList);
                               //
-                              $('tbody').append('<tr id="item'+el.product_id+'">  <td class="indexItem"></td><td>'+ el.product_id +'</td><td>'+ el.product_name +'</td><td><div style="text-align: center" id="pro'+el.product_id+'">'+quantity+'</div><td ><div id="price'+el.product_id+'">'+totalPirice+'</div></td><td class="text-right"><from><input style="display:none" id="'+el.product_id+'" value="'+el.product_id+'" ><button onclick="editProductItem('+el.product_id+')" type="button" style="margin-right: 10px" class="btn btn-success"><span class="glyphicon glyphicon-pencil"></span</button><button onclick="deleteProductItem('+el.product_id+')" type="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></button></from></td></tr>');
+                              var stringprice = formatNumber(el.price);
+                              var stringtotalPirice = formatNumber(totalPirice);
+                              $('tbody').append('<tr id="item'+el.product_id+'">  <td class="indexItem"></td><td>'+ el.product_id +'</td><td>'+ el.product_name +'</td><td><div style="text-align: center" id="pro'+el.product_id+'">'+quantity+'</div><td ><div id="price'+el.product_id+'">'+stringtotalPirice+'</div></td><td><p style="text-align: center">'+
+                                el.discount_product +'</p></td><td >'+stringprice+'</td><td class="text-right"><from><input style="display:none" id="'+el.product_id+'" value="'+el.product_id+'" ><button onclick="editProductItem('+el.product_id+')" type="button" style="margin-right: 10px" class="btn btn-success"><span class="glyphicon glyphicon-pencil"></span</button><button onclick="deleteProductItem('+el.product_id+')" type="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></button></from></td></tr>');
                                 
                           });
 
@@ -483,8 +594,8 @@
               for (var i = 0; i < productQuantity.length; i++) {
                   totals +=   Number(productQuantity[i].totalPirice);
               }
-                              
-          $('#total').html('<span>tong tien </span><span></span>'+totals+'<span> Vnđ</span><input id="totalProducts" name="totalProducts" value="'+totals+'">');
+          var stringTotal = formatNumber(totals) ;              
+          $('#total').html('<span>tong tien </span><span></span>'+stringTotal+'<span> Vnđ</span><input id="totalProducts" name="totalProducts" value="'+totals+'">');
         }
         ////////////////////// PHAN KHACH HANG //////////////////////////////////////
       
@@ -532,20 +643,38 @@
                       return false;
                   }
                  var totalProducts = $('#totalProducts').val();
-                 var customer_id = $(".customer_id").val();
+                 var customer_id = $('.customer_id').val();
 
-                 var checkSupmit = confirm('thuc hien supmit don hang' + fullname_Customer +'');
+                var note ;
+                if ($.trim($('#OverviewNote').val()) == '') {
+                     note =  'nothing';
+                }else{
+                    note =  $('#OverviewNote').val();
+                }
+               
+                 console.log(note);
+                 var checkSupmit = confirm('Thuc Hien supmit Don Hang :' + fullname_Customer +'');
                   if (checkSupmit) {
                       $.post('{{ route('viewOrderPostProduct') }}', {
                           "_token": "{{ csrf_token() }}",
                           totalProducts: totalProducts,
                           customer_id: customer_id,
                           productQuantity: productQuantity,
-                          productList: productList
+                          productList: productList,
+                          note: note
     
                       },function(data , status){
 
                           console.log(data);
+                          if(data != '' ){
+                             
+                                $('#exampleModalCenterInOrder').modal({
+                                      keyboard: false
+                                 });
+                                $('#fullnameCustomer').text(fullname_Customer);
+                                $('#orderId').val(data);
+                                $('#orderIdlabel').text(data);
+                          }
                        
 
                       });
@@ -611,6 +740,20 @@
         });
 
       }
+      /////////////////////////deldete///////order/////////////
+      function deleteOrder(){
+
+        location.reload();
+
+      }
+     /// format nu ber//////////////////
+      function formatNumber(num) {
+     return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+    }
+
+
+      //////////////////////////////////////phan trang//////////////////////////////////////////////
+   
 
 	</script>
 @stop

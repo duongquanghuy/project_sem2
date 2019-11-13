@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class EmendColumnToOrderTable extends Migration
+class RenameVotesToDetailsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,9 @@ class EmendColumnToOrderTable extends Migration
      */
     public function up()
     {
-        Schema::table('order', function (Blueprint $table) {
-           $table->dropColumn('discount_nullable');
-
-      
-
-
-        });
+               Schema::table('order_details', function (Blueprint $table) {
+                    $table->renameColumn('quantity', 'quantity_product');
+                });
     }
 
     /**
@@ -29,6 +25,6 @@ class EmendColumnToOrderTable extends Migration
      */
     public function down()
     {
-       Schema::dropIfExists('order');
+         Schema::dropIfExists('order_details');
     }
 }

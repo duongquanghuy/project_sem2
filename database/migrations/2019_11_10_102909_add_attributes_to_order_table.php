@@ -14,7 +14,8 @@ class AddAttributesToOrderTable extends Migration
     public function up()
     {
         Schema::table('order', function (Blueprint $table) {
-            $table->dropColumn('discount_nullable');
+            $table->integer('total_money');
+            $table->integer('total_money_discount');
          
         });
     }

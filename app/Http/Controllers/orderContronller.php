@@ -10,6 +10,29 @@ class orderContronller extends Controller
     public function viewAddOrders(Request $request){
     	return view('order.addOrder');
     }
+    public function printOrderID(Request $request){
+        $id = $request->orderId;
+
+        $index =1 ;
+
+        $order = DB::table('order')
+                ->select('order_id' , 'em_roll_no_order' , 'created_at' , 'discount_nullable' , 'total_money' ,'customer_fullname' ,'customer_phone')
+                ->join('customer', 'customer.customer_id', '=', 'order.customer_id_order')
+                ->where('order_id', $id)
+                ->get();  
+        $orderList = DB::table('order_details')
+                ->select('product_id' , 'product_name' , 'price' , 'quantity_product' , 'totalPirice')
+                ->join('product', 'product.product_id', '=', 'order_details.fk_product_id')
+             
+                ->where('order_details.fk_order_id', $id)
+        ->get();
+        return view('order.reciept')->with([
+            'index' => $index,
+            'orderList' => $orderList,
+            'order' => $order,
+           
+        ]);
+    }
 
     public function viewAddProduct(Request $request){
     	$product_id = $request->product_id;
@@ -51,7 +74,8 @@ class orderContronller extends Controller
         $productQuantity = $request->productQuantity;
         $productList = $request->productList;
         $customer_id = $request->customer_id;
-
+        $note = $request->note;
+        
         $total_money = 0;
         foreach ($productQuantity as $itemQ) {
              $total_money =  $total_money + ($itemQ['price'] * $itemQ['quantity']);
@@ -64,9 +88,9 @@ class orderContronller extends Controller
                 DB::table('order')->insert([
                         'em_roll_no_order' =>  '1',
                         'customer_id_order'=> $customer_id,
-                        'note'             => 'ko co gi',
+                        'note'             => $note,
                         'created_at' => $currentTime,
-                        'updated_at' => $currentTime,
+                        'updated_at'    => null,
                         'total_money'      =>  $total_money,
                         'total_money_discount' => $totalProducts,
                         'discount_nullable'=> $discount_nullable,
@@ -76,7 +100,18 @@ class orderContronller extends Controller
         
      
         $id = DB::getPdo()->lastInsertId();
-        return $customer_id;
+        
+        foreach ($productQuantity as $item) {
+                DB::table('order_details')->insert([
+                        'fk_order_id' =>  $id,
+                        'fk_product_id'=> $item['product_id'],
+                        'discount_per_product'  => $item['discount'],
+                        'quantity_product' => (int)$item['quantity'],
+                        'totalPirice' => $item['totalPirice'],
+                ]);
+        } 
+
+        return $id;
 
 
 
