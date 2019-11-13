@@ -17,8 +17,7 @@
 @yield('css')
  <style type="text/css">
 
-
-   body {
+body {
     background-color: #f1f1f1;
 }
 body::-webkit-scrollbar {
@@ -44,7 +43,7 @@ body::-webkit-scrollbar-thumb {
 
 
 .wrapper {
-    min-height: 2000px;
+    min-height: auto;
 }
 .padding-top {
     padding: 0px;
