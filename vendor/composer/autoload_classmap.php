@@ -15,15 +15,12 @@ return array(
     'App\\Http\\Controllers\\Auth\\ResetPasswordController' => $baseDir . '/app/Http/Controllers/Auth/ResetPasswordController.php',
     'App\\Http\\Controllers\\Auth\\VerificationController' => $baseDir . '/app/Http/Controllers/Auth/VerificationController.php',
     'App\\Http\\Controllers\\Controller' => $baseDir . '/app/Http/Controllers/Controller.php',
-<<<<<<< HEAD
+    'App\\Http\\Controllers\\ControllerLogin' => $baseDir . '/app/Http/Controllers/controllerLogin.php',
+    'App\\Http\\Controllers\\controllerProductManage' => $baseDir . '/app/Http/Controllers/controllerProductManage.php',
+    'App\\Http\\Controllers\\controllerRegister' => $baseDir . '/app/Http/Controllers/controllerRegister.php',
     'App\\Http\\Controllers\\customersController' => $baseDir . '/app/Http/Controllers/customersController.php',
     'App\\Http\\Controllers\\employeesController' => $baseDir . '/app/Http/Controllers/employeesController.php',
     'App\\Http\\Controllers\\orderContronller' => $baseDir . '/app/Http/Controllers/orderContronller.php',
-=======
-    'App\\Http\\Controllers\\ControllerLogin' => $baseDir . '/app/Http/Controllers/controllerLogin.php',
-    'App\\Http\\Controllers\\controllerRegister' => $baseDir . '/app/Http/Controllers/controllerRegister.php',
-    'App\\Http\\Controllers\\customersController' => $baseDir . '/app/Http/Controllers/customersController.php',
->>>>>>> up date by LE Tuan
     'App\\Http\\Kernel' => $baseDir . '/app/Http/Kernel.php',
     'App\\Http\\Middleware\\AdminLoginMiddleware' => $baseDir . '/app/Http/Middleware/AdminLoginMiddleware.php',
     'App\\Http\\Middleware\\Authenticate' => $baseDir . '/app/Http/Middleware/Authenticate.php',

@@ -1,0 +1,129 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use DB;
+
+class controllerProductManage extends Controller
+{
+	public function showAll(Request $request){
+		$product = DB::table('product')->get();
+		$category = DB::table('product_category')->select('category_name', 'category_id')->get();
+		// $dateTest = "31-12-1999";
+		$categoryIdUpdate = null;
+
+		return view('productManage')->with([
+			'product' => $product,
+			'category' => $category,
+			// 'dateTest' => $dateTest,
+			'edit' => false,
+			'categoryIdUpdate' => $categoryIdUpdate
+		]);
+	}
+
+	public function searchProduct(Request $request){
+		$id = $request->idSearch;
+		$product = DB::table('product')->where('product_id', $id)->get();
+		$category = DB::table('product_category')->select('category_name', 'category_id')->get();
+		$categoryIdUpdate = null;
+
+		return view('productManage')->with([
+			'product' => $product,
+			'category' => $category,
+			// 'dateTest' => $dateTest,
+			'edit' => false,
+			'categoryIdUpdate' => $categoryIdUpdate
+		]);
+	}
+
+	public function editProduct(request $request){
+		$product = DB::table('product')->get();
+		$category = DB::table('product_category')->select('category_name', 'category_id')->get();
+		$id = 0;
+		$productNameUpdate = $linkImgUpdate = $categoryIdUpdate = $expDateUpdate = $quantityUpdate = $discountUpdate = $originalPriceUpdate = $priceUpdate = '';
+		if(isset($request->id) && ($request->id) != null){
+			$id = $request->id;
+			$productUpdate = DB::table('product')
+			->where('product_id', $id)
+			->get();
+
+			if($productUpdate != null && count($productUpdate) >0){
+				$productNameUpdate = $productUpdate[0]->product_name;
+				$linkImgUpdate = $productUpdate[0]->link_img;
+				$categoryIdUpdate = $productUpdate[0]->category_id;
+				$expDateUpdate = $productUpdate[0]->exp_date;
+				$quantityUpdate = $productUpdate[0]->quantity;
+				$discountUpdate = $productUpdate[0]->discount_product;
+				$originalPriceUpdate = $productUpdate[0]->original_price;
+				$priceUpdate = $productUpdate[0]->price;
+				$type = 1;
+			}
+		}
+
+		return view('productManage')->with([
+			'edit' => true,
+			'product' => $product,
+			'category' => $category,
+			'productNameUpdate' => $productNameUpdate,
+			'id' => $id,
+			'linkImgUpdate' => $linkImgUpdate, 
+			'categoryIdUpdate' => $categoryIdUpdate,
+			'expDateUpdate' => $expDateUpdate,
+			'quantityUpdate' => $quantityUpdate,
+			'originalPriceUpdate' => $originalPriceUpdate,
+			'discountUpdate' => $discountUpdate,
+			'priceUpdate' => $priceUpdate,
+			'type' => $type
+		]);
+	}
+
+	public function addProduct(request $request){
+		$id = $request->id;
+		$name = $request->name;
+		$urlImage = $request->urlImage;
+		$categoryId = $request->categoryId;
+		$expDate = $request->expDate;
+		$quantity = $request->quantity;
+		$originalPrice = $request->originalPrice;
+		$discount = $request->discount;
+		$price = $request->price;
+		$type = $request->type;
+
+		if($type == 1){
+			DB::table('product')
+    		->where('product_id', $id)
+    		->update([
+    			'product_id' => $id,
+    			'product_name' => $name,
+	    		'category_id' => $categoryId,
+	    		'link_img' => $urlImage,
+	    		'exp_date' => $expDate,
+	    		'price' => $price,
+	    		'quantity' => $quantity,
+	    		'original_price' => $originalPrice,
+	    		'discount_product' => $discount
+    		]);
+		}else{
+			DB::table('product')->insert([
+				'product_id' => $id,
+	    		'product_name' => $name,
+	    		'category_id' => $categoryId,
+	    		'link_img' => $urlImage,
+	    		'exp_date' => $expDate,
+	    		'price' => $price,
+	    		'quantity' => $quantity,
+	    		'original_price' => $originalPrice,
+	    		'discount_product' => $discount
+    		]);
+		}
+		return redirect()->route('product-manage');
+	}
+
+	public function deleteProduct(Request $request){
+    	DB::table('product')
+    	->where('product_id', $request->id)
+    	->delete();
+    }
+}
