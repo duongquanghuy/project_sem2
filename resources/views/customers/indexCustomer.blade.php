@@ -226,19 +226,19 @@
             		});
         	});
 
-	}
-	 $('#search').keypress(function(event) {
-	 	var keycode = (event.keyCode ? event.keyCode : event.which);
-	 	var search = $('#search').val();
-	 	if(keycode == '13'){
-	 		if (search != '') {
+	     }
+    	 $('#search').keypress(function(event) {
+    	 	var keycode = (event.keyCode ? event.keyCode : event.which);
+    	 	var search = $('#search').val();
+    	 	if(keycode == '13'){
+    	 		if (search != '') {
 
-	 		}else{
-	 			alert('You pressed a "enter" key in textbox');
-	 		}
-       	   
-    	}
-	 });
+    	 		}else{
+    	 			alert('You pressed a "enter" key in textbox');
+    	 		}
+           	   
+        	}
+    	 });
 
 
 

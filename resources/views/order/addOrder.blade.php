@@ -25,14 +25,18 @@
    #fullnameCustomer{
       color: green;
    }
+  
   @media only screen and (max-width: 900px) {
     .modal-body-printorder{
       height: 100px;
     }
   }
+
+
     
 
 	</style>
+  }
 	
 @stop
 @section('sideber-menu')
@@ -52,14 +56,14 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Overview (max 200 words)</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Overview (max 120 words)</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
    
        
-          <textarea placeholder="note" class="form-control" rows="10" value="note"  id="OverviewNote" name="Overview"></textarea>
+          <textarea maxlength="120" placeholder="note" class="form-control" rows="10" value="note"  id="OverviewNote" name="Overview"></textarea>
     
       <div class="modal-footer" style="border: none;">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -325,7 +329,8 @@
            var indexof = 0;
 		   $('#product-id , #quantity').keypress(function(event) {
             var keycode = (event.keyCode ? event.keyCode : event.which);
-            var product_id = $('#product-id').val();
+            var product_id_str = $('#product-id').val();
+            var product_id = product_id_str.toUpperCase();
             var quantity = $('#quantity').val();
             var total = $('#total').val();
 
@@ -337,7 +342,7 @@
           
               if (product_id != ''){
                 if(vnf_regex.test(product_id) == false){
-                   alert("chu cai phai viet hoa va toi thieu 3 ky tu");
+                   alert(" toi thieu 3 ky tu");
                    return false;
                 }
                 if(quantity <= 0){
@@ -434,10 +439,10 @@
 
                                       val.totalPirice = Number(discount_price) * Number(val.quantity);
 
-                                
-                                     
+                                      var stringtotalPirice = formatNumber(val.totalPirice);
+
                                       $('#pro'+product_id+'').text(val.quantity);
-                                      $('#price'+product_id+'').text(val.totalPirice);
+                                      $('#price'+product_id+'').text(stringtotalPirice);
                                       console.log(val.quantity);
                                       return false;
                                   }
@@ -598,7 +603,6 @@
           $('#total').html('<span>tong tien </span><span></span>'+stringTotal+'<span> Vnđ</span><input id="totalProducts" name="totalProducts" value="'+totals+'">');
         }
         ////////////////////// PHAN KHACH HANG //////////////////////////////////////
-      
         function summitCustomer(){
           var vnf_regex_number = /((09|03|07|08|05)+([0-9]{8})\b)/g;
           var phonenumber = $('#phone_number').val();
@@ -748,8 +752,8 @@
       }
      /// format nu ber//////////////////
       function formatNumber(num) {
-     return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-    }
+        return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+      }
 
 
       //////////////////////////////////////phan trang//////////////////////////////////////////////
