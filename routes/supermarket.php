@@ -38,7 +38,22 @@
 		Route::post('/OrderPost', 'orderContronller@viewOrderPostProduct')->name('viewOrderPostProduct');
 
 		Route::get('/printOrder', 'orderContronller@printOrderID')->name('printOrderID');
+		////////////////////////////DisPlay , them , sua , xoa////////////
 
+
+		Route::get('/viewIndexOrder', 'orderContronller@displayOrder')->name('displayOrder');
+
+		Route::get('/serachDay', 'orderContronller@searchDaytime')->name('searchDaytime');
+
+		Route::get('/edit', 'orderContronller@editOrderID')->name('editOrderID');
+		// them tung san pham
+		Route::post('/editAddProduct', 'orderContronller@addProductOreder')->name('addProductOreder');
+		//sua so luong san pham da co
+		Route::post('/editQuantity', 'orderContronller@addProductQuantityOreders')->name('addProductQuantityOreder');
+		Route::post('/editQuantityButton', 'orderContronller@addProductQuantityOrederButton')->name('addProductQuantityOrederButton');
+
+
+		
 		
 	});
 
