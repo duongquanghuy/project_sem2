@@ -16,10 +16,6 @@ Route::group(['prefix' => '/admin', 'middleware' => 'adminLogin'], function () {
 		Route::get('/employee-manage', 'controllerEmployeeManage@showAll')->name('employee-manage');
 
 
-		//sale
-		Route::get('/sales-statistic', 'controllerSalesStatistic@showAll')->name('employee-manage');
-
-
 		Route::get('/logout' , 'controllerLogin@handlerLogout')->name('handler-logout');
 		Route::get('/register', function(){
 			return view('registerForm');
