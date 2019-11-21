@@ -82,7 +82,7 @@
             <ul class="list-inline pull-right mini-stat">
               <li>
 
-                <h5> Total order <span class="stat-value color-orang"><i class="fa fa-plus-circle"></i>
+                <h5> Total Bill <span class="stat-value color-orang"><i class="fa fa-plus-circle"></i>
                  {{ $countOrderList }}</span></h5>
                 
               </li>
@@ -117,6 +117,7 @@
 					<div  class="alert alert-danger SearchDay">
 					</div>
 				</div>
+				
 			</form>
    		</div>
 		
@@ -156,17 +157,23 @@
 									<td>{{ date('d/m/Y', strtotime($iteme->created_at))  }}  </td>
 								
 			                        <td>
-			                        	<a href="{{ route('editOrderID') }}?id={{ $iteme->order_id	 }}" data-placement="top" data-toggle="tooltip" title="Edit">
+			                        	<a href="{{ route('editOrderID') }}?id={{ $iteme->order_id	 }}"   title="Edit" style="text-decoration:none;" data-toggle="tooltip">
 			                        		<button 
-			                        	 		class="btn btn-primary btn-xs" data-target="#exampleModalCenter" data-title="Edit" data-toggle="modal" data-target="#edit" >
+			                        	 		class="btn btn-primary btn-xs" >
 			                        			<span class="glyphicon glyphicon-pencil"></span>
 			                        		</button>
 			                        	</a>
-			                        	<a data-placement="top" data-toggle="tooltip" title="delete">
-			                        		<button onclick="deleteOrederId({{ $iteme->order_id }})" class="btn btn-danger btn-xs" data-target="#exampleModalCenter" data-title="Edit" data-toggle="modal" data-target="#delete" >
+			                        	<a href="{{ route('printOrderIdIndex') }}?id={{ $iteme->order_id	 }}"  title="print" style="text-decoration:none;" data-toggle="tooltip">
+			                        		<button  class="btn btn-success btn-xs" >
+			                        			<span class="glyphicon glyphicon-print"></span>
+			                        		</button>
+			                        	</a>
+			                        	<a style="text-decoration:none;" data-toggle="tooltip" title="delete">
+			                        		<button onclick="deleteOrederId({{ $iteme->order_id }})" class="btn btn-danger btn-xs" >
 			                        			<span class="glyphicon glyphicon-trash"></span>
 			                        		</button>
 			                        	</a>
+
 			                        </td>
 			            
 			                    </tr>
@@ -216,11 +223,26 @@
 	
 	/////////////////////////////////phan xua xoa///////////
 		function deleteOrederId(id){
-			///
+			console.log(id);
+
+			var checkDelete = confirm('You sure you want to Delete ? ID : ' + id);
+						if (checkDelete) {
+				$.post('{{ route('deleteOrderID') }}', {
+                          "_token": "{{ csrf_token() }}",
+                         	id: id
+    
+                      },function(data , status){
+                      	  console.log(data);
+                          alert(status);
+                          location.reload();
+                     });
+			}else{
+				////
+			}
 		}
 
 
-	
+		$('[data-toggle="tooltip"]').tooltip();   
 
 
 

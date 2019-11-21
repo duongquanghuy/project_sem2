@@ -22,7 +22,9 @@ class CreateOrderDetails extends Migration
             $table->foreign('fk_product_id')
                     ->references('product_id')
                     ->on('product');
-            $table->integer('discount_per_product');
+            $table->float('discount_per_product')->length(3,3);
+            $table->integer('quantity_product');
+            $table->integer('totalPirice'); 
         });
     }
 

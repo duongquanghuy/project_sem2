@@ -75,16 +75,15 @@
             <div class="col-md-4">
 	            <ul class="breadcrumb">
 		            <li><i class="fa fa-home"></i><a href="#"> Home</a></li>
-		            <li class="active"><a href="">Order List</a></li>
+		            <li class="active"><a href="{{ route('displayOrder') }}">Order List</a></li>
+		            <li class="active"><a href="{{ route('searchDaytime') }}">Search Day Order</a></li>
 	          	</ul>
             </div>
             <div class="col-md-8">
 	            <ul class="list-inline pull-right mini-stat">
 	              <li>
 
-	                <h5> Total order 
-	                	<span class="stat-value color-orang"><i class="fa fa-plus-circle"></i>
-	                 </span></h5>
+	                
 	                
 	              </li>
 	            </ul>
@@ -115,17 +114,15 @@
 				<div class="form-group has-feedback">
 					<input class="from-inline" id="date" type="date" name="bday" min="2000-01-02" >
 					<button   class="btn btn-success">Search Day</button>
-					<div  class="alert alert-danger SearchDay">
-					</div>
+					
+				</div>
+				<div  class="alert alert-danger SearchDay">
 				</div>
 			</form>
    		</div>
 		
     </div>
-       <input style="display: none;" id="noThing" type="" name="" value="">
 	<div class="row">
-		
-        
         <div class="col-md-12">
         	<h4></h4>
         	<div class="table-responsive">
@@ -157,14 +154,19 @@
 									<td>{{ date('d/m/Y', strtotime($iteme->created_at))  }}  </td>
 								
 			                        <td>
-			                        	<a href="{{ route('editOrderID') }}?id={{ $iteme->order_id	 }}" data-placement="top" data-toggle="tooltip" title="Edit">
+			                        	<a href="{{ route('editOrderID') }}?id={{ $iteme->order_id	 }}"   title="Edit" style="text-decoration:none;" data-toggle="tooltip">
 			                        		<button 
-			                        	 		class="btn btn-primary btn-xs" data-target="#exampleModalCenter" data-title="Edit" data-toggle="modal" data-target="#edit" >
+			                        	 		class="btn btn-primary btn-xs" >
 			                        			<span class="glyphicon glyphicon-pencil"></span>
 			                        		</button>
 			                        	</a>
-			                        	<a data-placement="top" data-toggle="tooltip" title="delete">
-			                        		<button onclick="deleteOrederId({{ $iteme->order_id }})" class="btn btn-danger btn-xs" data-target="#exampleModalCenter" data-title="Edit" data-toggle="modal" data-target="#delete" >
+			                        	<a href="{{ route('printOrderIdIndex') }}?id={{ $iteme->order_id	 }}"  title="print" style="text-decoration:none;" data-toggle="tooltip">
+			                        		<button  class="btn btn-success btn-xs" >
+			                        			<span class="glyphicon glyphicon-print"></span>
+			                        		</button>
+			                        	</a>
+			                        	<a style="text-decoration:none;" data-toggle="tooltip" title="delete">
+			                        		<button onclick="deleteOrederId({{ $iteme->order_id }})" class="btn btn-danger btn-xs" >
 			                        			<span class="glyphicon glyphicon-trash"></span>
 			                        		</button>
 			                        	</a>
@@ -179,12 +181,18 @@
 
    		</div>
    </div>
-
+	<input style="display: none;" id="noThing" type="" name="" value="{{ $noThing }}">
 </div>
 @stop
 @section('js')
 	<script type="text/javascript">
-	
+			var noThing =  $('#noThing').val();
+			console.log(noThing);
+			if(noThing == 4){
+				$('.SearchDay').text('khong tim thay ket qua nao!');
+				$('.SearchDay').css('display' , 'block');
+
+			}
 		
 		
 
@@ -201,6 +209,27 @@
        	   
     			}
 		});
+		 function deleteOrederId(id){
+			console.log(id);
+
+			var checkDelete = confirm('You sure you want to Delete ? ID : ' + id);
+						if (checkDelete) {
+				$.post('{{ route('deleteOrderID') }}', {
+                          "_token": "{{ csrf_token() }}",
+                         	id: id
+    
+                      },function(data , status){
+                      	  console.log(data);
+                          alert(status);
+                          location.reload();
+                     });
+			}else{
+				////
+			}
+		}
+
+
+		$('[data-toggle="tooltip"]').tooltip(); 
 		
 		
 	

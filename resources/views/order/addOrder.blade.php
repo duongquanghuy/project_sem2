@@ -25,7 +25,12 @@
    #fullnameCustomer{
       color: green;
    }
-  
+    #totalProducts{
+      display: none;
+    }
+    #total{
+      font-weight: 700;
+    }
   @media only screen and (max-width: 900px) {
     .modal-body-printorder{
       height: 100px;
@@ -46,6 +51,24 @@
 
 @stop
 @section('container-fluid')
+<div class="row">
+            <div class="col-md-4">
+            <ul class="breadcrumb">
+            <li><i class="fa fa-home"></i><a href="#" onclick="checkOrderNull()"> Home</a></li>
+              <li class="active"><a href="" style="color: #333333">Add Order</a></li>
+          </ul>
+            </div>
+            <div class="col-md-8">
+            <ul class="list-inline pull-right mini-stat">
+              <li>
+
+                <h5> Total order <span class="stat-value color-orang"><i class="fa fa-plus-circle"></i>
+                 </span></h5>
+                
+              </li>
+            </ul>
+            </div>
+</div>
 
 <!-- note -->
 <!-- Button trigger modal -->
@@ -227,7 +250,6 @@
                     <input id="quantity" name="quantity" type="number" placeholder="Quantity" class="form-control input-md" style="border-radius: 5px;" value="1">
               </div>
           </div>
-         
         </div>
      
  
@@ -249,8 +271,7 @@
             </div>
           <div class="col-md-1" style="margin-top: 10px">
               <div class="input-group othertop" >
-              
-                    <button  id="submit" onclick="summitCustomer()" class="btn" type="button" 
+                    <button   id="submit" onclick="summitCustomer()" class="btn btn-success" type="button" 
                     data-target="" data-title="Edit" data-toggle="modal" >submit</button>
               </div>
           </div>
@@ -289,24 +310,14 @@
                     <th> </th>
                    </thead>
                 <tbody id="productList" >
-                  
                 </tbody>
           </table>
-
-           
         </div>
-
         <div class="row" >
               <div class="col-md-10"></div>
               <div id="total" class="col-md-2"   >
-                   
-
               </div>
-          
-
         </div>
-       
-        
       </div>
    </div>
    
@@ -314,19 +325,11 @@
 @section('js')
   
 	<script type="text/javascript">
-          
-       
-          
           var productList = [];
           var productQuantity = [];
-          
           var option =1;
           var indexItem;
 
-          console.log(productList);
-          console.log(productQuantity);
-
-           var indexof = 0;
 		   $('#product-id , #quantity').keypress(function(event) {
             var keycode = (event.keyCode ? event.keyCode : event.which);
             var product_id_str = $('#product-id').val();
@@ -337,9 +340,6 @@
             //
         if(keycode == '13'){
              var vnf_regex = /^[A-Z0-9_-]{3,16}$/;
-
-
-          
               if (product_id != ''){
                 if(vnf_regex.test(product_id) == false){
                    alert(" toi thieu 3 ky tu");
@@ -358,7 +358,6 @@
                   if (data == '' && data.length == 0) {
                       alert('san pham ko ton tai');
                       return false;
-
                   }
                
                   if (productList == '' && productList.length == 0) {
@@ -409,7 +408,7 @@
                               
                                 var stringprices = formatNumber(el.price);
                                 var stringtotalPirices = formatNumber(totalPirice);
-                              $('tbody').append('<tr id="item'+el.product_id+'">  <td class="indexItem"></td><td>'+ el.product_id +'</td><td>'+ el.product_name +'</td><td><div style="text-align: center" id="pro'+el.product_id+'">'+quantity+'</div><td ><div id="price'+el.product_id+'">'+stringtotalPirices+'</div></td><td><p style="text-align: center">'+
+                              $('tbody').append('<tr id="item'+el.product_id+'"><td class="indexItem"></td><td>'+ el.product_id +'</td><td>'+ el.product_name +'</td><td><div style="text-align: center" id="pro'+el.product_id+'">'+quantity+'</div><td ><div id="price'+el.product_id+'">'+stringtotalPirices+'</div></td><td><p style="text-align: center">'+
                                 el.discount_product +'</p></td><td >'+stringprices+'</td><td class="text-right"><from><input style="display:none" id="'+el.product_id+'" value="'+el.product_id+'" ><button onclick="editProductItem('+el.product_id+')" type="button" style="margin-right: 10px" class="btn btn-success"><span class="glyphicon glyphicon-pencil"></span</button><button onclick="deleteProductItem('+el.product_id+')" type="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></button></from></td></tr>');
 
 
@@ -470,7 +469,7 @@
                               var totalPirice = discount_price * quantity ;
                               totals = totalPirice;
                               var stringTotal = formatNumber(totals) ; 
-                              $('#total').html('<span>tong tien </span><span></span>'+stringTotal+'<span> Vnđ</span><input id="totalProducts" name="totalProducts" value="'+totals+'">');
+                              $('#total').html('<span>Total Money </span><span></span>'+stringTotal+'<span> Vnđ</span><input id="totalProducts" name="totalProducts" value="'+totals+'">');
                               console.log(totalPirice);
                               // them so luong
                               array = {
@@ -600,7 +599,7 @@
                   totals +=   Number(productQuantity[i].totalPirice);
               }
           var stringTotal = formatNumber(totals) ;              
-          $('#total').html('<span>tong tien </span><span></span>'+stringTotal+'<span> Vnđ</span><input id="totalProducts" name="totalProducts" value="'+totals+'">');
+          $('#total').html('<span>Total Money </span><span></span>'+stringTotal+'<span> Vnđ</span><input id="totalProducts" name="totalProducts" value="'+totals+'">');
         }
         ////////////////////// PHAN KHACH HANG //////////////////////////////////////
         function summitCustomer(){
@@ -612,9 +611,9 @@
              if (vnf_regex_number.test(phonenumber) == false){
                 alert('Số điện thoại của bạn không đúng định dạng!');
                 return false;
-            }else{
-              //
-            }
+              }else{
+                 //
+              }
             }else{
                 alert('Bạn chưa điền số điện thoại!');
                  return false;
@@ -755,6 +754,19 @@
         return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
       }
 
+      function checkOrderNull(){
+          if (productQuantity != '' && productQuantity.length > 0) {
+              var  checkHome = confirm('Would you like to go back to the homepage? Agree orders will be canceled!');
+              if(checkHome){
+                 /*  window.location.href = '';*/
+              }else{
+                //
+              }
+          } else{
+             /*    window.location.href = '';*/
+          }
+       
+      }
 
       //////////////////////////////////////phan trang//////////////////////////////////////////////
    

@@ -10,6 +10,30 @@ class orderContronller extends Controller
     public function viewAddOrders(Request $request){
     	return view('order.addOrder');
     }
+    // in hoa don
+    public function printOrderIdIndex(Request $request){
+        $id = $request->id;
+
+        $index =1 ;
+
+        $order = DB::table('order')
+                ->select('order_id' , 'em_roll_no_order' , 'created_at' , 'discount_nullable' , 'total_money' ,'customer_fullname' ,'customer_phone')
+                ->join('customer', 'customer.customer_id', '=', 'order.customer_id_order')
+                ->where('order_id', $id)
+                ->get();  
+        $orderList = DB::table('order_details')
+                ->select('product_id' , 'product_name' , 'price' , 'quantity_product' , 'totalPirice')
+                ->join('product', 'product.product_id', '=', 'order_details.fk_product_id')
+             
+                ->where('order_details.fk_order_id', $id)
+        ->get();
+        return view('order.recieptIndex')->with([
+            'index' => $index,
+            'orderList' => $orderList,
+            'order' => $order,
+           
+        ]);
+    }
     public function printOrderID(Request $request){
         $id = $request->orderId;
 
@@ -109,7 +133,23 @@ class orderContronller extends Controller
                         'quantity_product' => (int)$item['quantity'],
                         'totalPirice' => $item['totalPirice'],
                 ]);
-        } 
+
+             $quantity = (int)$item['quantity'];
+             $data =   DB::table('product')->where('product_id','=',$item['product_id'])->get();
+
+           foreach ($data as $items) {
+                $quantityProduct =  $items->product_on_store - $quantity;
+                DB::table('product')
+                    ->where('product_id','=',$item['product_id'])
+                    ->update([
+                            'product_on_store' => $quantityProduct,
+                    ]);
+           }
+                   
+        }
+       
+
+           
 
         return $id;
     }
@@ -155,7 +195,7 @@ class orderContronller extends Controller
         $date =   date('Y-m-d', strtotime($request->bday));
         $orderLists;
         $index = 1 ;
-    
+        $noThing = 1;
         $orderLists  =  (DB::table('order')->whereDate('created_at','=', $date))
                        ->paginate(10);
                     
@@ -164,32 +204,56 @@ class orderContronller extends Controller
             $index = ($request->page-1)*10+1;
         }    
         $orderLists->appends(request()->input())->links();
-
+     
+        if ($orderLists == '' && count($orderLists) == 0) {
+           $noThing = 4;
+        }
         return view('order.indexSearchDay')->with([
                     'index' => $index,
                     'orderLists' => $orderLists,
+                    'noThing' => $noThing,
+
         ]);
     }
-//////////////////////////////////////////////////
+////////////////////////////////////////////////// Edit///////////////
     public function editOrderID(Request $request){
             $id = $request->id;
             $index = 1 ;
-            $fk_order_id = '';
+            $order_id = '';
+            $customerPhone = '';
+            $em_roll_no = '';
+            $em_fullname = '';
+            $order = DB::table('employee')
+                        ->select('fullName'  , 'em_roll_no' , 'order_id' , 'customer_phone' )
+                        ->join('order' , 'order.em_roll_no_order' , '=' ,'employee.em_roll_no')
+                        ->join('customer' , 'customer.customer_id' , '=' , 'order.customer_id_order')
+                        ->where('order_id' , $id)
+                        ->get();
+
             $orderList = DB::table('order_details')
                 ->select('fk_order_id', 'product_id','product_name' , 'price','discount_product' , 'quantity_product' , 'totalPirice')
                 ->join('product', 'product.product_id', '=', 'order_details.fk_product_id')
                 ->where('order_details.fk_order_id', $id)
-                ->get();
-            foreach ($orderList as $item ) {
-                $fk_order_id = $item->fk_order_id;
-            
+                ->paginate(10);
+
+             if(isset($request->page)){
+                 $index = ($request->page-1)*10+1;
+             }    
+             $orderList->appends(request()->input())->links();   
+            foreach ($order as $item ) {
+                $order_id = $item->order_id;
+                $customerPhone = $item->customer_phone;
+                $em_roll_no = $item->em_roll_no;
+                $em_fullname = $item->fullName;
             }
               
             return view('order.editOrder')->with([
                 'index'     => $index,
                 'orderList' => $orderList,
-                'fk_order_id' => $fk_order_id,
-               
+                'order_id' => $order_id,
+                'customerPhone' => $customerPhone,
+                'em_roll_no' => $em_roll_no,
+                'em_fullname' => $em_fullname,
             ]);
 
     }
@@ -215,6 +279,7 @@ class orderContronller extends Controller
         $total = 0;
         $totalProduct ;
         $status = '';
+        $option = 0 ;
         $data = DB::table('order_details')
                         ->select('fk_order_id', 'product_id','product_name'  , 'price','discount_product' , 'quantity_product','product_on_store' , 'totalPirice')
                         ->join('product', 'product.product_id', '=', 'order_details.fk_product_id')
@@ -279,47 +344,99 @@ class orderContronller extends Controller
                            ]);
                     $status = 'more success';
                     break;
-            }
+                }
            }else{
                 $status = 'Product number is invalid';
            }
 
         }
        
-        return $status;
-    }   
-    public function addProductQuantityOrederButton(Request $request){
-            $quantity   =  $request->quantity;
-            $product_id =  $request->product_id;
-            $order_id   =  $request->fk_order_id;
-            $quantityProduct= 0;
-            $product = DB::table('product')->where('product_id' , $product_id)->get();
-                foreach ($product as $item ) {
-                    $quantityProduct  =  (int)$item->product_on_store  - (int)($quantity);
-                
-                   
-                    
+        $totalMoneyOrder = DB::table('order_details')
+                            ->select('fk_order_id', 'product_id', 'price','discount_product' , 
+                                'quantity_product' , 'totalPirice')
+                            ->join('product', 'product.product_id', '=', 'order_details.fk_product_id')
+                            ->where('fk_order_id',$orderID)
+                            ->get();
 
-                    $total = $quantityID * ($item->price * ($item->discount_product/100));
-                    $totalProduct = ($quantityID * $item->price) - $total;
-                    DB::table('order_details')
-                      ->where('fk_order_id','=',$order_id)
-                      ->where('fk_product_id','=', $productID)
-                      ->update([
-                            'quantity_product' => $quantityID,
-                            'totalPirice' => $totalProduct
-                       ]);
-                      /////
-                    DB::table('product')
-                      ->where('product_id','=',$productID)
-                     
-                      ->update([
-                            'product_on_store' => $quantityProduct,
-                           
-                       ]);
-                    $status = 'more success';
-                    break;
-                }
+            $total_money = 0;
+            $totalProducts = 0;
+            foreach ($totalMoneyOrder as $itemQ) {
+                 $total_money =  $total_money + ($itemQ->price * $itemQ->quantity_product);
+                 $totalProducts = $totalProducts + $itemQ->totalPirice;
+            }
+       
+            $edit_discount_nullable = (($total_money - $totalProducts) / $total_money) * 100;
+
+            DB::table('order')->where('order_id' ,'=', $orderID)
+                              ->update([
+                                'discount_nullable'  => $edit_discount_nullable,
+                                'total_money_discount' => $totalProducts,
+                              ]);
+        
+        return $status;
 
     }
+    ///////delete order/////////
+    public function deleteOrderID(Request $request){
+            $id = $request->id;
+            
+            $quantity = 0;
+            $productDelete =  DB::table('order_details')->where('fk_order_id' , $id)->get();
+
+            foreach ($productDelete as $item) {
+                $quantity = $item->quantity_product;
+
+                $product =  DB::table('product')->where('product_id' , $item->fk_product_id)->get();
+
+                $product_on_store_count = 0;
+                foreach ($product as $itemP) {
+                   $product_on_store_count =  $itemP->product_on_store + $quantity;
+                }
+                DB::table('product')->where('product_id' , $item->fk_product_id)
+                                    ->update([
+                                        'product_on_store' =>  $product_on_store_count
+                                    ]);
+            }
+            DB::table('order_details')->where('fk_order_id' , $id)->delete();
+
+            DB::table('order')->where('order_id' , $id)->delete();
+            
+    }
+    //delete san 1 san pham trong don
+    public function deleteProductInOrder(Request $request){
+            $quantity_product = $request->quantity_product;
+            $order_product_id = $request->order_product_id;
+            $fk_order_id = $request->fk_order_id;
+            
+            
+            $quantity = 0;
+            $productDelete =  DB::table('order_details')
+                                ->where('fk_order_id' , $fk_order_id)
+                                ->where('fk_product_id' , $order_product_id)
+                                ->get();
+
+            foreach ($productDelete as $item) {
+                $quantity = $item->quantity_product;
+
+                $product =  DB::table('product')->where('product_id' , $item->fk_product_id)->get();
+
+                $product_on_store_count = 0;
+                foreach ($product as $itemP) {
+                   $product_on_store_count =  $itemP->product_on_store + $quantity;
+                }
+                DB::table('product')->where('product_id' , $item->fk_product_id)
+                                    ->update([
+                                        'product_on_store' =>  $product_on_store_count
+                                    ]);
+                break;
+            }
+            DB::table('order_details')->where('fk_order_id' , $fk_order_id)
+                                      ->where('fk_product_id' , $order_product_id)
+                                      ->delete();
+
+          
+            
+    }
+    
+
 }
