@@ -13,7 +13,7 @@ class OrderSeeder extends Seeder
     {
     	$currentTime = date('Y-m-d');
         DB::table('order')->insert([
-            'user_id' => 6,
+            'user_id' => 1,
             'customer_id_order' => 1,
             'note'	=> 'no thing',
             'created_at' => $currentTime,
@@ -23,7 +23,7 @@ class OrderSeeder extends Seeder
             
         ]);
          DB::table('order')->insert([
-            'user_id' => 6,
+            'user_id' => 1,
             'customer_id_order' => 1,
             'note'	=> 'no thing',
             'created_at' => $currentTime,
@@ -33,7 +33,7 @@ class OrderSeeder extends Seeder
             
         ]);
           DB::table('order')->insert([
-            'user_id' => 6,
+            'user_id' => 1,
             'customer_id_order' => 1,
             'note'	=> 'no thing',
             'created_at' => $currentTime,
@@ -43,7 +43,7 @@ class OrderSeeder extends Seeder
             
         ]);
            DB::table('order')->insert([
-            'user_id' => 6,
+            'user_id' => 1,
             'customer_id_order' => 1,
             'note'	=> 'no thing',
             'created_at' => $currentTime,
@@ -53,7 +53,7 @@ class OrderSeeder extends Seeder
             
         ]);
             DB::table('order')->insert([
-            'user_id' => 6,
+            'user_id' => 1,
             'customer_id_order' => 1,
             'note'	=> 'no thing',
             'created_at' => $currentTime,

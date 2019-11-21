@@ -21,9 +21,20 @@
 	});
 	// nhan vien
 	Route::group(['prefix' => '/employees'], function(){
-
+		//Show All Employee
 		Route::get('/viewEmps', 'employeesController@viewEmployees')->name('viewEmployees');
+
+		//Edit and Update Employee
+		Route::post('/editEmp', 'employeesController@editEmployee')->name('editEmployee');
+		Route::post('/updateEmp', 'employeesController@updateEmployee')->name('updateEmployee');
+
+		//Add Employee
+		Route::post('/addEmp', 'employeesController@addEmployee')->name('addEmployee');
+
+		//Search Employee
+		Route::post('/searchEmp', 'employeesController@searchEmployee')->name('searchEmployee');
 	});
+	
 	// don hang
 
 	Route::group(['prefix' => '/orders'], function(){
