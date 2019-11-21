@@ -15,20 +15,19 @@ class CreateOrder extends Migration
     {
         Schema::create('order', function (Blueprint $table) {
             $table->bigIncrements('order_id');
-            $table->string('em_roll_no_order');
-            $table->foreign('em_roll_no_order')
-                    ->references('em_roll_no')
-                    ->on('employee');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')
+                    ->references('user_id')
+                    ->on('users');
             $table->unsignedBigInteger('customer_id_order');
             $table->foreign('customer_id_order')
                     ->references('customer_id')
                     ->on('customer');
-            $table->dateTime('closed_time');
-            $table->dateTime('created_time');
-            $table->integer('dateTime')->length(30);
             $table->string('note')->length(300);
-            $table->integer('discount_nullable')->length(2,3);
-
+            $table->timestamps();
+            $table->float('total_money_discount');
+            $table->float('discount_nullable')->length(3,3);
+            $table->float('total_money');
         });
     }
 

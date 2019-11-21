@@ -36,13 +36,17 @@
 		Route::post('/checkPhone', 'orderContronller@viewOrderPostPhone')->name('viewOrderPostPhone');
 		// gui du lieu don hang len sever
 		Route::post('/OrderPost', 'orderContronller@viewOrderPostProduct')->name('viewOrderPostProduct');
-
+		//in hoa don
 		Route::get('/printOrder', 'orderContronller@printOrderID')->name('printOrderID');
+		//in hoa don thoe index
+		Route::get('/printOrderIndex', 'orderContronller@printOrderIdIndex')->name('printOrderIdIndex');
+		
 		////////////////////////////DisPlay , them , sua , xoa////////////
 
-
+		//hien thi tat ca cac san pham
 		Route::get('/viewIndexOrder', 'orderContronller@displayOrder')->name('displayOrder');
 
+		/// tim kiem thoe ngay
 		Route::get('/serachDay', 'orderContronller@searchDaytime')->name('searchDaytime');
 
 		Route::get('/edit', 'orderContronller@editOrderID')->name('editOrderID');
@@ -50,9 +54,10 @@
 		Route::post('/editAddProduct', 'orderContronller@addProductOreder')->name('addProductOreder');
 		//sua so luong san pham da co
 		Route::post('/editQuantity', 'orderContronller@addProductQuantityOreders')->name('addProductQuantityOreder');
-		Route::post('/editQuantityButton', 'orderContronller@addProductQuantityOrederButton')->name('addProductQuantityOrederButton');
-
-
+		Route::post('/deleteOrder', 'orderContronller@deleteOrderID')->name('deleteOrderID');
+		
+		//xóa 1 san pham
+		Route::post('/deleteProduct', 'orderContronller@deleteProductInOrder')->name('deleteProductInOrder');
 		
 		
 	});

@@ -240,13 +240,16 @@ p {
     
     function myFunction() {
         
-          window.print(); 
+           window.print(); 
 
+         
+
+         
           window.onbeforeprint = function() {
                 console.log('This will be called before the user prints.');
             };
           window.onafterprint = function() {
-               window.location.href = '{{ route('viewAddOrders') }}'; 
+               window.location.href = '{{ route('displayOrder') }}'; 
           };
         
     }   

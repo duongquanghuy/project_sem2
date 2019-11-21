@@ -24,8 +24,8 @@ class CreateProduct extends Migration
             $table->boolean('exp_status');
             $table->integer('price');
             $table->double('quantity');
-            $table->double('product_on_store')->length(30);
-
+            $table->integer('original_price');
+            $table->float('discount_product')->length(3,3);
         });
     }
 

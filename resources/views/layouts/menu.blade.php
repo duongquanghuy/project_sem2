@@ -1,23 +1,23 @@
   <ul id="side" class="side-nav">
             <li class="panel">
-            <a id="panel1" href="javascript:;" data-toggle="collapse" data-target="#charts"> 
-              <i class="fa fa-dashboard"></i> Dashboard
-              <i class="fa fa-chevron-left pull-right" id="arow1"></i> </a>
+              <a id="panel1" href="javascript:;" data-toggle="collapse" data-target="#charts"> 
+                <i class="fa fa-dashboard"></i> Dashboard
+                <i class="fa fa-chevron-left pull-right" id="arow1"></i> 
+              </a>
             <ul class="collapse nav" id="charts">
               <li> <a href="#"><i class="fa fa-angle-double-right"></i> Flot Charts</a> </li>
               <li> <a href="#"><i class="fa fa-angle-double-right"></i> Morris.js</a> </li>
             </ul>
           </li>
-          <li class="panel">
-            <a id="panel2" href="javascript:;" data-toggle="collapse" data-target="#charts"> 
-              <i class="fa fa-bar-chart-o"></i> Charts
+             <li class="panel">
+            <a id="panel2" href="javascript:;" data-toggle="collapse" data-target="#calendar"> 
+              <i class="glyphicon glyphicon-sort-by-order"></i> Order Management
               <i class="fa fa-chevron-left pull-right" id="arow2"></i> </a>
-            <ul class="collapse nav" id="charts">
-              <li> <a href="#"><i class="fa fa-angle-double-right"></i> Flot Charts</a> </li>
-              <li> <a href="#"><i class="fa fa-angle-double-right"></i> Morris.js</a> </li>
+            <ul class="collapse nav" id="calendar">
+              <li> <a href="{{ route('viewAddOrders') }}"><i class="fa fa-angle-double-right"></i> Create an Order</a> </li>
+              <li> <a href="{{ route('displayOrder') }}"><i class="fa fa-angle-double-right"></i> Search orders</a> </li>
             </ul>
-          </li>
-          <li class="panel">
+          </li>          <li class="panel">
             <a id="panel3" href="javascript:;" data-toggle="collapse" data-target="#calendar"> 
               <i class="fa fa-calendar"></i> calendar
               <span class="label label-danger">new event</span> 

@@ -346,9 +346,10 @@ body::-webkit-scrollbar-thumb {
 
       });
         
-      $("#panel2").click(function() {
+       $("#panel2").click(function() {
         $("#arow2").toggleClass("fa-chevron-left");
         $("#arow2").toggleClass("fa-chevron-down");
+      
       });
         
       $("#panel3").click(function() {
