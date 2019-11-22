@@ -8,7 +8,7 @@
     $customer_phone;
     foreach ($order as $item) {
         $order_id = $item->order_id;
-        $em_roll_no_order = $item->em_roll_no_order;
+        $em_roll_no_order = $item->user_id;
         $created_at = $item->created_at;
         $discount_nullable = $item->discount_nullable;
         $total_money = $item->total_money;

@@ -20,7 +20,7 @@ class ControllerLogin extends Controller
         ]);
         $remember = $request->has('remember') ? true : false;
         if(Auth::attempt(['email'=>$request->email, 'password'=>$request->password], $remember)){
-            return redirect('/admin/test');
+            return redirect('/admin/product-manage');
         }else{  
             return redirect()->back()->with('status', 'You have entered the wrong email or password');
         }

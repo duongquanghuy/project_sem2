@@ -36,7 +36,21 @@
     }
 
     .container{
-      width: 1400px;
+      width: 1300px;
+    }
+
+    .panel-heading{
+      background-color: #2087bf !important;
+      font-weight: 600;
+      font-size: 20px;
+    }
+
+    th, {
+      font-weight: 600;
+    }
+    th{
+      color: #2087bf;
+      font-size: 18px;
     }
   </style>
 </head>
@@ -55,7 +69,8 @@
   <div class="panel panel-primary">
     <div class="panel-heading">
       Employee Manager
-      <a href=""><button type="button" class="btn btn-success">Show All Employee</button></a>
+      {{-- <a href=""><button type="button" class="btn btn-success">Show All Employee</button></a> --}}
+      <a href="{{route('employee-manage')}}" class="btn btn-primary btn-info"><span style="color: #FFFFFF" class="glyphicon glyphicon-list-alt"></span> </a>
     </div>
     <div style="/*background-color: red ; */height: 500px" class="panel-body">
       <table class="table table-hover">
@@ -76,13 +91,15 @@
           <td>{{ ($item->userId == null) ? 'No information' : $item->userId }}</td>
           <td>{{ ($item->userName == null) ? 'No infomation' : $item->userName }}</td>
           <td>{{ ($item->userEmail == null) ? 'No infomation' : $item->userEmail }}</td>
-          <td>{{ ($item->userAvatar == null) ? 'No information' : $item->userAvatar }}</td>
+          <td><p style="width: 200px">{{ ($item->userAvatar == null) ? 'No information' : $item->userAvatar }} </p></td>
           <td>{{ ($item->userLevel == null) ? 'No infomation' : $item->userLevel }}</td>
           <td>{{ ($item->userPhoneNumber == null) ? 'No infomation' : $item->userPhoneNumber }}</td>
           <td>{{ ($item->userBirthday == null) ? 'No infomation' : $item->userBirthday }}</td>
           <td>{{ ($item->userAddress == null) ? 'No infomation' : $item->userAddress }}</td>
-          <td><a href="{{ route('edit-employee') }}?id={{ $item->userId }}"><button class="btn btn-warning">Edit</button></a></td>
-          <td><button onclick="deleteEmployee({{ $item->userId }})" class="btn btn-danger">Delete</button></td>
+          {{-- <td><a href="{{ route('edit-employee') }}?id={{ $item->userId }}"><button class="btn btn-warning">Edit</button></a></td> --}}
+          <td><a href="{{ route('edit-employee') }}?id={{ $item->userId }}" class="btn btn-primary btn-info"><span style="color: #FFFFFF" class="glyphicon glyphicon-pencil"></span> </a></td>
+          {{-- <td><button onclick="deleteEmployee({{ $item->userId }})" class="btn btn-danger">Delete</button></td> --}}
+          <td><a onclick="deleteEmployee({{ $item->userId }})" class="btn btn-primary btn-danger"><span style="color: #FFFFFF" class="glyphicon glyphicon-trash"></span> </a></td>
         </tr>
         @endforeach
 
@@ -147,7 +164,9 @@
         <input required type="text" id="address" onfocus="" name="address" value="{{ $edit? $addressEmployeeUpdate : ''}}" class="form-control">
       </div>
 
-      <input type="submit"  value="Update" class="btn btn-success myBtn"></input>
+      {{-- <input type="submit"  value="Update" class="btn btn-success myBtn"></input> --}}
+      <button style="margin-top: 10px" type="submit" class="btn btn-primary btn-info"><span class="glyphicon glyphicon-plus-sign"></span>Update
+        </button>
       <input style="display: none;" id="dateTest" type="" name="" value="{{$edit? $birthdayEmployeeUpdate : ''}}"></input>
     </form>
   </div>

@@ -17,7 +17,7 @@ class orderContronller extends Controller
         $index =1 ;
 
         $order = DB::table('order')
-                ->select('order_id' , 'em_roll_no_order' , 'created_at' , 'discount_nullable' , 'total_money' ,'customer_fullname' ,'customer_phone')
+                ->select('order_id' , 'user_id' , 'created_at' , 'discount_nullable' , 'total_money' ,'customer_fullname' ,'customer_phone')
                 ->join('customer', 'customer.customer_id', '=', 'order.customer_id_order')
                 ->where('order_id', $id)
                 ->get();  
@@ -40,7 +40,7 @@ class orderContronller extends Controller
         $index =1 ;
 
         $order = DB::table('order')
-                ->select('order_id' , 'em_roll_no_order' , 'created_at' , 'discount_nullable' , 'total_money' ,'customer_fullname' ,'customer_phone')
+                ->select('order_id' , 'user_id' , 'created_at' , 'discount_nullable' , 'total_money' ,'customer_fullname' ,'customer_phone')
                 ->join('customer', 'customer.customer_id', '=', 'order.customer_id_order')
                 ->where('order_id', $id)
                 ->get();  
@@ -110,7 +110,7 @@ class orderContronller extends Controller
         $currentTime = date('Y-m-d');
        
                 DB::table('order')->insert([
-                        'em_roll_no_order' =>  '1',
+                        'user_id' =>  1,
                         'customer_id_order'=> $customer_id,
                         'note'             => $note,
                         'created_at' => $currentTime,
@@ -138,11 +138,11 @@ class orderContronller extends Controller
              $data =   DB::table('product')->where('product_id','=',$item['product_id'])->get();
 
            foreach ($data as $items) {
-                $quantityProduct =  $items->product_on_store - $quantity;
+                $quantityProduct =  $items->quantity - $quantity;
                 DB::table('product')
                     ->where('product_id','=',$item['product_id'])
                     ->update([
-                            'product_on_store' => $quantityProduct,
+                            'quantity' => $quantityProduct,
                     ]);
            }
                    
@@ -223,9 +223,10 @@ class orderContronller extends Controller
             $customerPhone = '';
             $em_roll_no = '';
             $em_fullname = '';
-            $order = DB::table('employee')
-                        ->select('fullName'  , 'em_roll_no' , 'order_id' , 'customer_phone' )
-                        ->join('order' , 'order.em_roll_no_order' , '=' ,'employee.em_roll_no')
+            $total_money_discount = '';
+            $order = DB::table('users')
+                        ->select('name'  , 'users.id' , 'order_id' , 'customer_phone' , 'total_money_discount')
+                        ->join('order' , 'order.user_id' , '=' ,'users.id')
                         ->join('customer' , 'customer.customer_id' , '=' , 'order.customer_id_order')
                         ->where('order_id' , $id)
                         ->get();
@@ -243,8 +244,9 @@ class orderContronller extends Controller
             foreach ($order as $item ) {
                 $order_id = $item->order_id;
                 $customerPhone = $item->customer_phone;
-                $em_roll_no = $item->em_roll_no;
-                $em_fullname = $item->fullName;
+                $em_roll_no = $item->id;
+                $em_fullname = $item->name;
+                $total_money_discount = $item->total_money_discount;
             }
               
             return view('order.editOrder')->with([
@@ -254,19 +256,30 @@ class orderContronller extends Controller
                 'customerPhone' => $customerPhone,
                 'em_roll_no' => $em_roll_no,
                 'em_fullname' => $em_fullname,
+                'total_money_discount' => $total_money_discount,
+
             ]);
 
     }
 
-    public function addProductOreder(Request $request){
+   public function addProductOreder(Request $request){
         $productID = $request->orde_product_id;
         $orderID = $request->fk_order_id;
 
-        $data = DB::table('order_details')
-                        ->where('fk_order_id','=',$orderID)
+            $order = DB::table('order_details')
+                        ->join('product')
+                        ->where('fk_order_id',$orderID)
                         ->where('fk_product_id','=', $productID)
                         ->get();
-        return $data;
+
+            $product = DB::table('product')->where('product_id' , $productID)->get();
+            if ($order != '') {
+                    return $order;
+                }else{
+                    return $product;
+            }
+              
+        
 
     }
 
@@ -281,7 +294,7 @@ class orderContronller extends Controller
         $status = '';
         $option = 0 ;
         $data = DB::table('order_details')
-                        ->select('fk_order_id', 'product_id','product_name'  , 'price','discount_product' , 'quantity_product','product_on_store' , 'totalPirice')
+                        ->select('fk_order_id', 'product_id','product_name'  , 'price','discount_product' , 'quantity_product','quantity' , 'totalPirice')
                         ->join('product', 'product.product_id', '=', 'order_details.fk_product_id')
                         ->where('fk_order_id','=',$orderID)
                         ->where('fk_product_id','=', $productID)
@@ -292,7 +305,7 @@ class orderContronller extends Controller
 
                 if((-$quantity) < $item->quantity_product){
                     $quantityID  =  (int)$item->quantity_product  + (int)($quantity);
-                    $quantityProduct  =  (int)$item->product_on_store  - (int)($quantity);
+                    $quantityProduct  =  (int)$item->quantity  - (int)($quantity);
                     $total = $quantityID * ($item->price * ($item->discount_product/100));
                     $totalProduct = ($quantityID * $item->price) - $total;
                     DB::table('order_details')
@@ -307,7 +320,7 @@ class orderContronller extends Controller
                       ->where('product_id','=',$productID)
                      
                       ->update([
-                            'product_on_store' => $quantityProduct,
+                            'quantity' => $quantityProduct,
                            
                        ]);
                     $status = 'more success';
@@ -325,7 +338,7 @@ class orderContronller extends Controller
                 foreach ($orderProduct as $item ) {
                         $total = $quantity * ($item->price * ($item->discount_product/100));
                         $totalProduct = ($quantity * $item->price) - $total;
-                        $quantityProduct  =  (int)$item->product_on_store  - (int)($quantity);
+                        $quantityProduct  =  (int)$item->quantity - (int)($quantity);
 
                           DB::table('order_details')->insert([
                             'fk_order_id' =>  $orderID,
@@ -339,7 +352,7 @@ class orderContronller extends Controller
                           ->where('product_id','=',$productID)
                          
                           ->update([
-                                'product_on_store' => $quantityProduct,
+                                'quantity' => $quantityProduct,
                                
                            ]);
                     $status = 'more success';
@@ -351,7 +364,7 @@ class orderContronller extends Controller
 
         }
        
-        $totalMoneyOrder = DB::table('order_details')
+           $totalMoneyOrder = DB::table('order_details')
                             ->select('fk_order_id', 'product_id', 'price','discount_product' , 
                                 'quantity_product' , 'totalPirice')
                             ->join('product', 'product.product_id', '=', 'order_details.fk_product_id')
@@ -390,11 +403,11 @@ class orderContronller extends Controller
 
                 $product_on_store_count = 0;
                 foreach ($product as $itemP) {
-                   $product_on_store_count =  $itemP->product_on_store + $quantity;
+                   $product_on_store_count =  $itemP->quantity + $quantity;
                 }
                 DB::table('product')->where('product_id' , $item->fk_product_id)
                                     ->update([
-                                        'product_on_store' =>  $product_on_store_count
+                                        'quantity' =>  $product_on_store_count
                                     ]);
             }
             DB::table('order_details')->where('fk_order_id' , $id)->delete();
@@ -407,7 +420,7 @@ class orderContronller extends Controller
             $quantity_product = $request->quantity_product;
             $order_product_id = $request->order_product_id;
             $fk_order_id = $request->fk_order_id;
-            
+
             
             $quantity = 0;
             $productDelete =  DB::table('order_details')
@@ -422,11 +435,11 @@ class orderContronller extends Controller
 
                 $product_on_store_count = 0;
                 foreach ($product as $itemP) {
-                   $product_on_store_count =  $itemP->product_on_store + $quantity;
+                   $product_on_store_count =  $itemP->quantity + $quantity;
                 }
                 DB::table('product')->where('product_id' , $item->fk_product_id)
                                     ->update([
-                                        'product_on_store' =>  $product_on_store_count
+                                        'quantity' =>  $product_on_store_count
                                     ]);
                 break;
             }
@@ -434,7 +447,28 @@ class orderContronller extends Controller
                                       ->where('fk_product_id' , $order_product_id)
                                       ->delete();
 
-          
+            
+           $totalMoneyOrder = DB::table('order_details')
+                            ->select('fk_order_id', 'product_id', 'price','discount_product' , 
+                                'quantity_product' , 'totalPirice')
+                            ->join('product', 'product.product_id', '=', 'order_details.fk_product_id')
+                            ->where('fk_order_id',$fk_order_id)
+                            ->get();
+
+            $total_money = 0;
+            $totalProducts = 0;
+            foreach ($totalMoneyOrder as $itemQ) {
+                 $total_money =  $total_money + ($itemQ->price * $itemQ->quantity_product);
+                 $totalProducts = $totalProducts + $itemQ->totalPirice;
+            }
+       
+            $edit_discount_nullable = (($total_money - $totalProducts) / $total_money) * 100;
+
+            DB::table('order')->where('order_id' ,'=', $fk_order_id)
+                              ->update([
+                                'discount_nullable'  => $edit_discount_nullable,
+                                'total_money_discount' => $totalProducts,
+                              ]);
             
     }
     

@@ -10,8 +10,8 @@ class employeesController extends Controller
 {
     public function viewEmployees(Request $request){
 
-    	$employeesList = DB::table('employee')->paginate(10);
-    	$employeesListCount = DB::table('employee')->count();
+    	$employeesList = DB::table('users')->paginate(10);
+    	$employeesListCount = DB::table('users')->count();
     	$emptyEmployeeNoti = 'There is no employee(s) on system!';
 
     	if ($employeesListCount > 0){
@@ -33,7 +33,7 @@ class employeesController extends Controller
 
     	$id = $request->id;
 
-    	$data = DB::table('employee')->where('em_roll_no', $id)->get();
+    	$data = DB::table('users')->where('id', $id)->get();
 
     	return $data;
     }
@@ -47,14 +47,14 @@ class employeesController extends Controller
     	$empAddress = $request->empAddress;
 
     	$updateEmp = [
-    		'fullName' => $empFullName,
+    		'name' => $empFullName,
     		'birth_day' => $empBirthDay,
     		'phone_number' => $empPhoneNumber,
     		'address' => $empAddress,
     	];
 
 
-    	DB::table('employee')->where('em_roll_no', $empRollNo)->update($updateEmp);
+    	DB::table('users')->where('id', $empRollNo)->update($updateEmp);
 
     	$status = 'Update Employee Success!';
 
@@ -70,43 +70,43 @@ class employeesController extends Controller
 
     	if ($empFullNameAdd == ''){
             $status = "Fullname cannot be null!";
-            return $status;
+            return $data;
         }
 
         $phoneNumberRegex = '/^[0-9]+$/';
         if ($empPhoneNumberAdd != ''){
             if(preg_match($phoneNumberRegex, $empPhoneNumberAdd) == false || strlen($empPhoneNumberAdd) > 13){
-                $status = 'Wrong Phone Number Format!';
-                return $status;
+                $data = 'Wrong Phone Number Format!';
+                return $data;
             }
         }
 
         $birthDayRegex = '/([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/';
         if ($empBirthDayAdd != ''){
             if(preg_match($birthDayRegex, $empBirthDayAdd) == false){
-                $status = 'Wrong Date Time Format!';
-                return $status;
+                $data = 'Wrong Date Time Format!';
+                return $data;
             }
         }
 
         $addEmp = [
-    		'fullName' => $empFullNameAdd,
+    		'name' => $empFullNameAdd,
     		'birth_day' => $empBirthDayAdd,
     		'phone_number' => $empPhoneNumberAdd,
     		'address' => $empAddressAdd,
     	];
 
-    	DB::table('employee')->insert($addEmp);
+    	DB::table('users')->insert($addEmp);
 
-    	$status = "Add Employee Success!";
+    	$data = "Add Employee Success!";
 
-    	return $status;
+    	return $data;
     }
 
     public function searchEmployee(Request $request){
     	$nameSearch = $request->stringSearch;
 
-	    $employeesList = DB::table('employee')->where('fullName', 'LIKE', '%' . $nameSearch . '%')->paginate(5);
+	    $employeesList = DB::table('users')->where('name', 'LIKE', '%' . $nameSearch . '%')->paginate(5);
 
     	return view('viewEmployees')->with([
 			'employeesList' => $employeesList,

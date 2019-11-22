@@ -1,23 +1,23 @@
   <ul id="side" class="side-nav">
             <li class="panel">
-              <a href="{{route('product-manage')}}" id="panel1" href="javascript:;" data-toggle="collapse" data-target="#charts"> 
+              <a href="{{route('product-manage')}}" id="panel1" href="javascript:;" data-toggle="collapse" data-target="#charts">
                 <i class="fa fa-dashboard"></i> Product
                 {{-- <i class="fa fa-chevron-left pull-right" id="arow1"></i>  --}}
               </a>
           </li>
              <li class="panel">
-            <a id="panel2" href="javascript:;" data-toggle="collapse" data-target="#calendar"> 
+            <a id="panel2" href="javascript:;" data-toggle="collapse" data-target="#calendar">
               <i class="glyphicon glyphicon-sort-by-order"></i> Order Management
               <i class="fa fa-chevron-left pull-right" id="arow2"></i> </a>
             <ul class="collapse nav" id="calendar">
               <li> <a href="{{ route('viewAddOrders') }}"><i class="fa fa-angle-double-right"></i> Create an Order</a> </li>
               <li> <a href="{{ route('displayOrder') }}"><i class="fa fa-angle-double-right"></i> Search orders</a> </li>
             </ul>
-          </li>          
-  
+          </li>
+
           <li class="panel">
             <a href="{{route('employee-manage')}}" id="panel4" href="javascript:;" data-toggle="collapse" data-target="#clipboard"> <i class="fa fa-clipboard"></i> Employee
-              
+
           </a>
         </li>
           <li class="panel">
@@ -25,10 +25,10 @@
               <i class="fa fa fa-chevron-left pull-right" id="arow5"></i>
             </a>
             <ul class="collapse nav" id="edit">
-              <li> 
+              <li>
                 <a href="{{ route('displayCus') }}"><i class="fa fa-angle-double-right"></i> List Customer </a>
               </li>
-             
+
             </ul>
           </li>
 

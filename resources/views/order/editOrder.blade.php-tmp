@@ -1,15 +1,15 @@
 @extends('layouts.headerMenu')
 @section('css')
 	<style type="text/css">
-	
+
 			.modal-body{
 				height: 100px;
 			}
-		
+
 
 	</style>
-		
-	
+
+
 @stop
 @section('sideber-menu')
 <div class="left-sidebar" id="show-nav">
@@ -32,20 +32,20 @@
       </div>
         <!-- phan sua thong tin -->
       <div class="modal-body">
-          
-       
+
+
       <div class="form-group" >
-         <label class="col-md-5 control-label input-left" >Quantity : <strong id="quantity-label"></strong></label>  
+         <label class="col-md-5 control-label input-left" >Quantity : <strong id="quantity-label"></strong></label>
          <div class="col-md-11 input-left">
- 
+
             <div class="input-group othertop">
               <div class="input-group-addon">
                   <i class="fa fa-sticky-note-o fa-1x" style="font-size: 20px;"></i>
-        
+
               </div>
               <input id="qunatityProduct" name="product" type="number" placeholder=" Secondary Phone number " class="form-control input-md">
             </div>
-  
+
           </div>
         </div>
       </div>
@@ -72,21 +72,21 @@
       </div>
         <!-- phan sua thong tin -->
       <div class="modal-body">
-          
-       
+
+
       <div class="form-group" >
       	 <input style="display: none;" id="product_id_button" type="text" name="">
-         <label class="col-md-5 control-label input-left" >Quantity : <span id="product-id-label-button"> </span></label>  
+         <label class="col-md-5 control-label input-left" >Quantity : <span id="product-id-label-button"> </span></label>
          <div class="col-md-11 input-left">
- 
+
             <div class="input-group othertop">
               <div class="input-group-addon">
                   <i class="fa fa-sticky-note-o fa-1x" style="font-size: 20px;"></i>
-        
+
               </div>
               <input id="qunatityProductID" name="product" type="number" placeholder=" Secondary Phone number " class="form-control input-md">
             </div>
-  
+
           </div>
         </div>
       </div>
@@ -114,14 +114,14 @@
 
                 <h5> Total order <span class="stat-value color-orang"><i class="fa fa-plus-circle"></i>
                  </span></h5>
-                
+
               </li>
             </ul>
             </div>
 </div>
 <!-- het phan homeword -->
 <div class="container">
-	
+
     <div class="row">
         <div class="col-md-6 col-md-offset-3" style="text-align: center;">
         	<label style=" font-size: 30px;">Order ID : {{ $order_id }}</label>
@@ -140,11 +140,11 @@
 	       			</div>
 	  					 <input id="orderProduct" name="orderProduct" type="text" placeholder="Citizenship No." class= "form-control input-md">
 	      			</div>
-      	
+
   			</div>
   			<div class="col-md-2"  style="margin-top: 5px;" >
               		<div class="input-group othertop" >
-                    	<button  id="submit" onclick="addPoduct()" class="btn" type="button" 
+                    	<button  id="submit" onclick="addPoduct()" class="btn" type="button"
                     	 data-title="Edit" data-toggle="modal" >Add Product</button>
               		</div>
          	</div>
@@ -155,19 +155,19 @@
 			            </button>
 			        </a>
          	</div>
-		</div> 
+		</div>
     </div>
 	<div class="row">
-		
-        
+
+
         <div class="col-md-12">
         	<h4></h4>
         	<div class="table-responsive">
 
-                
+
               <table id="mytable" class="table table-bordred table-striped">
                    <thead>
-	                    
+
 	                   	<th>#</th>
 	                   	<th>ID Product</th>
 	                   	<th>product name</th>
@@ -180,40 +180,40 @@
     				<tbody>
 						@foreach($orderList as $itemes)
 			                    <tr>
-			                      
+
 			                        <td>{{ $index++ }}   </td>
-			                       
+
 									<td>{{ $itemes->product_id }} </td>
 			                        <td>{{ $itemes->product_name }} </td>
 			                        <td>{{ number_format($itemes->price) }}</td>
 			                        <td>{{ $itemes->discount_product }} </td>
 			                        <td>{{ $itemes->quantity_product }}  </td>
 			                        <td>{{ number_format($itemes->totalPirice) }}  </td>
-			                       
-									
-								
+
+
+
 			                        <td>
-			                        
-			                        	<p style="display: inline-block;" title="Edit">	
+
+			                        	<p style="display: inline-block;" title="Edit">
   				                        <button onclick="editProductID('{{ $itemes->product_id }}' ,{{ $itemes->quantity_product }})"
   				                        	 	class="btn btn-primary btn-xs" data-title="Edit"   >
   				                        		<span class="glyphicon glyphicon-pencil"></span>
   				                        </button>
 			                        	</p>
-			                        	
+
 			                        	<p style="display: inline-block;"  data-placement="top" data-toggle="tooltip" >
   			                        		<button title="delete" onclick="deleteProductID('{{ $itemes->product_id }}' ,{{ $itemes->quantity_product }})" class="btn btn-danger btn-xs" data-target="#exampleModalCenter" data-title="Edit" data-toggle="modal" data-target="#delete" >
   			                        			<span class="glyphicon glyphicon-trash"></span>
   			                        		</button>
 			                        	</p>
 			                        </td>
-			            
+
 			                    </tr>
 			    			@endforeach
    					</tbody>
    				</table>
    				{{ $orderList->links() }}
-   				
+
 
    			</div>
         <div class="row" >
@@ -260,7 +260,7 @@
 		function severQuantityProduct(){
 			var quantity = $('#qunatityProduct').val();
 			var order_product_id = $('#orderProduct').val();
-		
+
 			$.post('{{ route('addProductQuantityOreder') }}' ,{
            			"_token": "{{ csrf_token() }}",
            			 quantity: quantity,
@@ -273,15 +273,15 @@
 	            location.reload();
        		 });
 
-		
+
 		}
 		///// sua so luong button edit
 		function editProductID(order_product_id , quantity_product){
-		
-		
+
+
 			$('#product-id-label-button').text(quantity_product);
 			$('#product_id_button').val(order_product_id);
-	
+
 			$('#exampleModalCenterProductID').modal({
                keyboard: false
               });
@@ -301,7 +301,7 @@
 	          	$('#exampleModalCenterProductID').modal('hide');
 	          	alert(data);
 	          	location.reload();
-	       
+
        		 });
 
 		}
@@ -317,19 +317,19 @@
            },function(data , status){
               alert(status);
               location.reload();
-         
+
            });
         }else{
           //
         }
-       
+
     }
 
-			
 
-		
 
-		
+
+
+
 
 
 

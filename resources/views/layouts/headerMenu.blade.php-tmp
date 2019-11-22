@@ -85,7 +85,7 @@ body::-webkit-scrollbar-thumb {
     border-radius: 10px;
     color: #fff;
     background-color: #f1f1f1;
-    
+
 }
 .top-bar .navbar-form {
     padding: 0px 15px;
@@ -231,7 +231,7 @@ body::-webkit-scrollbar-thumb {
 .right-container{width:82%;float:right;transition:0.5s;margin-top: 70px;}
 .less-width{width:0%;transition:0.5s;}
 .full-width{width:100%;transition:0.5s;}
-} 
+}
 .mini-stat h5{
     float: left;
     margin: 0;
@@ -240,9 +240,9 @@ body::-webkit-scrollbar-thumb {
     color: #888888;
 }
 .mini-stat li{
-    border-left: 1px solid #ddd;   
+    border-left: 1px solid #ddd;
     padding-left: 10px;
-    padding-right: 10px;} 
+    padding-right: 10px;}
 
 .mini-stat>li:first-child {
     border-left: none;
@@ -293,10 +293,10 @@ body::-webkit-scrollbar-thumb {
         <a class="navbar-brand" href="#"><img src="https://lh3.googleusercontent.com/-N4NB2F966TU/WM7V1KYusRI/AAAAAAAADtA/fPvGVNzOkCo7ZMqLI6pPITE9ZF7NONmawCJoC/w185-h40-p-rw/logo.png" > </a>
       </div>
       <div class="collapse navbar-collapse navbar-right" id="myNavbar" >
-          
+
           <ul class="nav navbar-nav">
               <li style="text-align: right; ">
-                <a class="li-a-img" href="#"><img src="http://timvieclamsieuthi.com/upload/images/big-c-tuyen-dung-nhan-su-thang-5.jpg "  width="30px" height="30px" 
+                <a class="li-a-img" href="#"><img src="http://timvieclamsieuthi.com/upload/images/big-c-tuyen-dung-nhan-su-thang-5.jpg "  width="30px" height="30px"
                   style="border-radius: 50% ; margin-top: -9px;"> </a>
               </li>
               <li class=""><a href="#"><span class="glyphicon">&#xe008;</span> @if(Auth::check())
@@ -307,9 +307,9 @@ body::-webkit-scrollbar-thumb {
               <li class=""><a href="#"><i class="fa fa-envelope"></i> <span class="badge">5</span></a> </li>
               <li class=""><a href="#"><i class="fa fa-bell"></i> <span class="badge">9</span></a> </li>
               <li class="">
-      
+
           </li>
-          <li class="dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="#">Sumit          
+          <li class="dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="#">Sumit
            <span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li> <a href="#"><i class="fa fa-user"></i> Profile</a> </li>
@@ -328,90 +328,90 @@ body::-webkit-scrollbar-thumb {
       <!-- begin SIDE NAV USER PANEL -->
       @yield('sideber-menu')
 
-      
+
       <!-- END SIDE NAV USER PANEL -->
     </div>
     <div class="right-container" id="right-container">
           @yield('container-fluid')
-      
+
     </div>
   </div>
   @yield('js')
 
 
-   
+
   <script type="text/javascript">
     $(document).ready(function() {
       $("#panel1").click(function() {
         $("#arow1").toggleClass("fa-chevron-left");
         $("#arow1").toggleClass("fa-chevron-down");
-      
+
 
       });
-        
+
        $("#panel2").click(function() {
         $("#arow2").toggleClass("fa-chevron-left");
         $("#arow2").toggleClass("fa-chevron-down");
-      
+
       });
-        
+
       $("#panel3").click(function() {
         $("#arow3").toggleClass("fa-chevron-left");
         $("#arow3").toggleClass("fa-chevron-down");
       });
-        
+
       $("#panel4").click(function() {
         $("#arow4").toggleClass("fa-chevron-left");
           $("#arow4").toggleClass("fa-chevron-down");
       });
-        
+
       $("#panel5").click(function() {
         $("#arow5").toggleClass("fa-chevron-left");
         $("#arow5").toggleClass("fa-chevron-down");
       });
-        
+
       $("#panel6").click(function() {
         $("#arow6").toggleClass("fa-chevron-left");
         $("#arow6").toggleClass("fa-chevron-down");
       });
-        
+
       $("#panel7").click(function() {
         $("#arow7").toggleClass("fa-chevron-left");
         $("#arow7").toggleClass("fa-chevron-down");
       });
-        
+
       $("#panel8").click(function() {
         $("#arow8").toggleClass("fa-chevron-left");
         $("#arow8").toggleClass("fa-chevron-down");
       });
-        
+
       $("#panel9").click(function() {
         $("#arow9").toggleClass("fa-chevron-left");
         $("#arow9").toggleClass("fa-chevron-down");
       });
-        
+
       $("#panel10").click(function() {
         $("#arow10").toggleClass("fa-chevron-left");
         $("#arow10").toggleClass("fa-chevron-down");
       });
-        
+
       $("#panel11").click(function() {
         $("#arow11").toggleClass("fa-chevron-left");
         $("#arow11").toggleClass("fa-chevron-down");
       });
-        
+
       $("#menu-icon").click(function() {
         $("#chang-menu-icon").toggleClass("fa-bars");
         $("#chang-menu-icon").toggleClass("fa-times");
         $("#show-nav").toggleClass("hide-sidebar");
         $("#show-nav").toggleClass("left-sidebar");
-          
+
         $("#left-container").toggleClass("less-width");
         $("#right-container").toggleClass("full-width");
       });
-        
-     
-        
+
+
+
     });
   </script>
 </body>

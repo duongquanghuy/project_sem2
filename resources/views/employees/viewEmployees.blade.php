@@ -29,30 +29,25 @@
         }
     </style>
 @stop
+
 @section('sideber-menu')
     <div class="left-sidebar" id="show-nav">
         @include('layouts.menu')
     </div>
 @stop
-@section('container-fluid')
 
+@section('container-fluid')
 
 <!-- Modal Edit Employee-->
 <div class="modal fade" id="edit-employee-modal" tabindex="-1" role="dialog" aria-labelledby="edit-employee-modalTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: auto">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title" id="exampleModalLongTitle"><strong>Edit Employee</strong></h1>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <h3 class="modal-title" id="exampleModalLongTitle"><strong>Edit Employee</strong></h3>
             </div>
 
       <!-- phan sua thong tin -->
             <div class="modal-body">
-                <div class="form-group" style="">
-                    <label>*Employee Roll Number: <span id="emp-roll-no"></span></label>
-                </div>
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="empFullName">*Full Name:</label>  
                     <div class="col-md-12">
@@ -100,7 +95,10 @@
             </div>
       <!-- het sua thong tin -->
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <br>
+                <br>
+                <br>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                 <button onclick="checkEmployeeUpdatingValidation()" type="button" class="btn btn-primary">Save Changes</button>
             </div>
         </div>
@@ -113,9 +111,6 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title" id="exampleModalLongTitle"><strong>Add Employee</strong></h3>
-                {{-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button> --}}
             </div>
 
       <!-- Add Employee Area -->
@@ -168,6 +163,8 @@
       <!-- het sua thong tin -->
             <div class="modal-footer">
                 <br>
+                <br>
+                <br>
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                 <button onclick="checkEmployeeAddingValidation()" type="button" class="btn btn-primary">Add Employee</button>
             </div>
@@ -199,13 +196,11 @@
     </div>
     <div class="row">
         <div class="col-md-4 col-md-offset-3">
-            {{-- <form class="search-form"> --}}
-                <div class="form-group has-feedback">
-                    <label for="empNameSearch" class="sr-only">*Search: </label>
-                    <input type="text" class="form-control" name="empNameSearch" id="emp-name-search" placeholder="Enter employee's name here">
-                    <span class="glyphicon glyphicon-search form-control-feedback"></span>
-                </div>
-            {{-- </form> --}}
+            <div class="form-group has-feedback">
+                <label for="empNameSearch" class="sr-only">*Search: </label>
+                <input type="text" class="form-control" name="empNameSearch" id="emp-name-search" placeholder="Enter employee's name here">
+                <span class="glyphicon glyphicon-search form-control-feedback"></span>
+            </div>
         </div>
     </div>
     <button type="button" class="btn btn-success" data-target="#add-employee-modal" data-toggle="modal">ADD EMPLOYEE</button>
@@ -215,13 +210,14 @@
             <div class="table-responsive">
                 <table id="mytable" class="table table-bordred table-striped">
                     <thead>
-                        <th>Employee(s) Roll No</th>
+                        <th>User ID</th>
                         <th>Full Name</th>
                         <th>Birth Day</th>
                         <th>Phone Number</th>
+                        <th>E-Mail</th>
                         <th>Username</th>
                         <th>Address</th>
-                        <th>System Authorization</th>
+                        <th>Level</th>
                         <th>Join Time</th>
                         <th>Retired Time</th>
                         <th>Edit</th>
@@ -229,18 +225,19 @@
                     <tbody>
                         @foreach($employeesList as $item)
                             <tr>
-                                <td class="center-element">{{ $item->em_roll_no }}</td>
-                                <th>{{ $item->fullName }}</th>
+                                <td class="center-element">{{ $item->id }}</td>
+                                <th>{{ $item->name }}</th>
                                 <td>{{ $item->birth_day }}</td>
                                 <td>{{ $item->phone_number }}</td>
+                                <td>{{ $item->email }}</td>
                                 <td>{{ $item->username }}</td>
                                 <td>{{ $item->address }}</td>
-                                <td class="center-element">{{ $item->system_authorization }}</td>
+                                <td class="center-element">{{ $item->level }}</td>
                                 <td>{{ $item->join_time }}</td>
                                 <td>{{ $item->retired_time }}</td>
                                 <td>
                                     <p data-placement="top" data-toggle="tooltip" title="Edit">
-                                        <button onclick="editEmployeeById({{ $item->em_roll_no }})" class="btn btn-primary btn-xs" data-target="#edit-employee-modal" data-toggle="modal" type="button">
+                                        <button onclick="editEmployeeById({{ $item->id }})" class="btn btn-primary btn-xs" data-target="#edit-employee-modal" data-toggle="modal" type="button">
                                             <span class="glyphicon glyphicon-pencil"></span>
                                         </button>
                                     </p>
@@ -260,10 +257,10 @@
 
         /*ADD EMPLOYEE*/
         function checkEmployeeAddingValidation(){
-            var empFullNameAdd = $("#emp-full-name-add").val();
-            var empBirthDayAdd = $("#emp-birth-day-add").val();
-            var empPhoneNumberAdd = $("#emp-phone-number-add").val();
-            var empAddressAdd = $("#emp-address-add").val();
+            var empFullNameAdd = $('#emp-full-name-add').val();
+            var empBirthDayAdd = $('#emp-birth-day-add').val();
+            var empPhoneNumberAdd = $('#emp-phone-number-add').val();
+            var empAddressAdd = $('#emp-address-add').val();
 
             if (empFullNameAdd == ''){
                 alert("Fullname cannot be null!");
@@ -286,7 +283,7 @@
                 }
             }
 
-            $.post('{{ route('addEmployee') }}', {
+            $.get('{{ route('addEmployee') }}', {
                 "_token": "{{ csrf_token() }}",
                 empFullNameAdd: empFullNameAdd,
                 empBirthDayAdd: empBirthDayAdd,
@@ -343,16 +340,16 @@
         }
 
         function editEmployeeById(id){
-            $.post('{{ route('editEmployee') }}' ,{
+            $.post('{{ route('editEmployee') }}', {
                 "_token": "{{ csrf_token() }}",
                 id: id
             },function(data){
                 $.each(data, function(item, val) {
-                    $("#emp-full-name").val(val.fullName);
+                    $("#emp-full-name").val(val.name);
                     $("#emp-birth-day").val(val.birth_day);
                     $("#emp-phone-number").val(val.phone_number);
                     $("#emp-address").val(val.address);
-                    $("#emp-roll-no").html(val.em_roll_no);
+                    $("#emp-roll-no").html(val.id);
                 });
             });
         }

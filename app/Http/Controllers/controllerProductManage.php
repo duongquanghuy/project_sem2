@@ -9,7 +9,11 @@ use DB;
 class controllerProductManage extends Controller
 {
 	public function showAll(Request $request){
-		$product = DB::table('product')->get();
+		$product = DB::table('product')
+		->join('product_category', 'product.category_id' , '=', 'product_category.category_id')
+		->get();
+
+		// dd($product);
 		$category = DB::table('product_category')->select('category_name', 'category_id')->get();
 		// $dateTest = "31-12-1999";
 		$categoryIdUpdate = null;
@@ -39,7 +43,9 @@ class controllerProductManage extends Controller
 	}
 
 	public function editProduct(request $request){
-		$product = DB::table('product')->get();
+		$product = DB::table('product')
+		->join('product_category', 'product.category_id' , '=', 'product_category.category_id')
+		->get();
 		$category = DB::table('product_category')->select('category_name', 'category_id')->get();
 		$id = 0;
 		$productNameUpdate = $linkImgUpdate = $categoryIdUpdate = $expDateUpdate = $quantityUpdate = $discountUpdate = $originalPriceUpdate = $priceUpdate = '';

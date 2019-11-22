@@ -83,7 +83,7 @@
   <form method="post" action=" {{ route('handler-login') }}">
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
     <div class="imgcontainer">
-      <img src="img_avatar2.png" alt="Avatar" class="avatar">
+      <img src="LogoBigC.jpg" alt="Avatar" class="avatar">
     </div>
 
     <div class="container">

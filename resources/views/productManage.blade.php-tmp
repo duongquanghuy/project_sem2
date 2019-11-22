@@ -37,7 +37,25 @@
       overflow: hidden;
     }
     .container{
-      width: 1300px;
+      width: 1400px;
+    }
+
+    .panel-heading{
+      background-color: #2087bf !important;
+      font-weight: 600;
+      font-size: 20px;
+    }
+
+    th, {
+      font-weight: 600;
+    }
+    th{
+      color: #2087bf;
+      font-size: 18px;
+      width: 30%;
+    }
+    td{
+      width: 20px !important;
     }
   </style>
 </head>
@@ -65,14 +83,17 @@
         <label for="id">Product's id</label>
         <input type="text" id="id" name="idSearch"  class="form-control" value="">
       </div>
-      <input type="submit" value="Search" class="btn btn-success myBtn"></input>
+      <button type="submit" style="margin-top: 10px" class="btn btn-info">
+        <span class="glyphicon glyphicon-search"></span> Search
+      </button>
     </form>
   </div>
 </div>
 <div class="panel panel-primary">
   <div class="panel-heading">
     Product Manager
-    <a href="{{route('product-manage')}}"><button type="button" class="btn btn-success">Show All Product</button></a>
+    {{-- <a href="{{route('product-manage')}}"><button type="button" class="btn btn-success">Show All Product</button></a> --}}
+    <a href="{{route('product-manage')}}" class="btn btn-primary btn-info"><span style="color: #FFFFFF" class="glyphicon glyphicon-list-alt"></span> </a>
   </div>
   <div class="panel-body">
     <table class="table table-hover">
@@ -93,15 +114,16 @@
       <tr id="fillterData">
         <td>{{ $item->product_id }}</td>
         <td>{{ $item->product_name }}</td>
-        <td>{{ $item->link_img }}</td>
-        <td>{{ $item->category_id }}</td>
+        <td><p style="width: 300px">{{ $item->link_img }}</p></td>
+        <td>{{ $item->category_name }}</td>
         <td>{{ $item->exp_date }}</td>
         <td>{{ $item->quantity }}</td>
         <td>{{ $item->discount_product }}</td>
         <td>{{ $item->original_price }}</td>
         <td>{{ $item->price}}</td>
-        <td><a href="{{ route("edit-product") }}?id={{$item->product_id}}"><button class="btn btn-warning">Edit</button></a></td>
-        <td><button onclick="deleteProduct('{{ $item->product_id }}')" class="btn btn-danger">Delete</button></td>
+        <td><a href="{{ route("edit-product") }}?id={{$item->product_id}}" class="btn btn-primary btn-info"><span style="color: #FFFFFF" class="glyphicon glyphicon-pencil"></span> </a></td>
+        {{-- <td><button onclick="deleteProduct('{{ $item->product_id }}')" class="btn btn-danger">Delete</button></td> --}}
+        <td><a onclick="deleteProduct('{{ $item->product_id }}')" class="btn btn-primary btn-danger"><span style="color: #FFFFFF" class="glyphicon glyphicon-trash"></span> </a></td>
       </tr>
       @endforeach
     </table>
@@ -162,7 +184,8 @@
           <label for="price">Price</label>
           <input required type="number" id="price" onfocus="" name="price" value="{{ $edit? $priceUpdate : ''}}" class="form-control">
         </div>
-        <input type="submit" value="{{ $edit? 'Update' : 'Add'}}" class="btn btn-success myBtn"></input>
+        <button style="margin-top: 10px" type="submit" class="btn btn-primary btn-info"><span class="{{$edit ? 'glyphicon glyphicon-save' : 'glyphicon glyphicon-plus-sign'}}"></span> {{$edit ? 'Update' : 'Add'}}
+        </button>
         <input style="display: none;" id="dateTest" type="" name="" value="{{$edit? $expDateUpdate : ''}}"></input>
       </form>
     </div>

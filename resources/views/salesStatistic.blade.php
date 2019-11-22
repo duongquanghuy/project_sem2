@@ -34,6 +34,28 @@
     #datepicker > span:hover{
       cursor: pointer;
     }
+
+    .container{
+      width: 1300px;
+    }
+
+    .container{
+      width: 1300px;
+    }
+
+    .panel-heading{
+      background-color: #2087bf !important;
+      font-weight: 600;
+      font-size: 20px;
+    }
+
+    th, {
+      font-weight: 600;
+    }
+    th{
+      color: #2087bf;
+      font-size: 18px;
+    }
   </style>
 </head>
 
@@ -51,14 +73,15 @@
   <div class="panel panel-primary">
     <div class="panel-heading">
       Sales Manager
-      <a href="{{ route('sales-manage')}}"><button type="button" class="btn btn-success">Show All Employee</button></a>
+      {{-- <a href="{{ route('sales-manage')}}"><button type="button" class="btn btn-success">Show All Employee</button></a> --}}
+      <a href="{{route('sales-manage')}}" class="btn btn-primary btn-info"><span style="color: #FFFFFF" class="glyphicon glyphicon-list-alt"></span> </a>
     </div>
     <div style="/*background-color: red ; */height: 500px" class="panel-body">
       <table class="table table-hover">
         <tr>
           <th>Id</th>
           <th>Full name</th>
-          <th>Sales this month</th>
+          <th>Sales this month ( $ )</th>
         </tr>
         @foreach ($employee as $item)
         <tr id="fillterData">
@@ -123,7 +146,9 @@
         
         
 
-        <input style="margin-top: 10px" type="submit"  value="Search" class="btn btn-success myBtn"></input>
+        <button type="submit" style="margin-top: 10px" class="btn btn-info">
+          <span class="glyphicon glyphicon-search"></span> Search
+        </button>
         <input style="display: none;" id="dateTest" type="" name="" value="{{-- {{$edit? $expDateUpdate : ''}} --}}"></input>
       </form>
     </div>

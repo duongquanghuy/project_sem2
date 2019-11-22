@@ -148,7 +148,7 @@
 			                      
 			                        <td>{{ $index++ }}   </td>
 			                        <td>{{ $iteme->order_id }} </td>
-			                        <td>{{ $iteme->em_roll_no_order }} </td>
+			                        <td>{{ $iteme->user_id }} </td>
 			                        <td>{{ $iteme->discount_nullable }}  </td>
 			                        <td>{{ number_format($iteme->total_money_discount) }}  </td>
 			                        <td style="max-width: 100px;  word-wrap: break-word; " >

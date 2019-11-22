@@ -469,7 +469,7 @@
                               var totalPirice = discount_price * quantity ;
                               totals = totalPirice;
                               var stringTotal = formatNumber(totals) ; 
-                              $('#total').html('<span>Total Money </span><span></span>'+stringTotal+'<span> Vnđ</span><input id="totalProducts" name="totalProducts" value="'+totals+'">');
+                              $('#total').html('<span>Total Money </span><span>'+stringTotal+'</span><span> Vnđ</span><input id="totalProducts" name="totalProducts" value="'+totals+'">');
                               console.log(totalPirice);
                               // them so luong
                               array = {
@@ -599,7 +599,7 @@
                   totals +=   Number(productQuantity[i].totalPirice);
               }
           var stringTotal = formatNumber(totals) ;              
-          $('#total').html('<span>Total Money </span><span></span>'+stringTotal+'<span> Vnđ</span><input id="totalProducts" name="totalProducts" value="'+totals+'">');
+          $('#total').html('<span>Total Money </span><span>'+stringTotal+'</span><span> Vnđ</span><input id="totalProducts" name="totalProducts" value="'+totals+'">');
         }
         ////////////////////// PHAN KHACH HANG //////////////////////////////////////
         function summitCustomer(){
