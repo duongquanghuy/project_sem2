@@ -31,6 +31,14 @@
     #datepicker > span:hover{
       cursor: pointer;
     }
+
+    td{
+      width: 30px !important;
+      overflow: hidden;
+    }
+    .container{
+      width: 1300px;
+    }
   </style>
 </head>
 
@@ -92,7 +100,7 @@
         <td>{{ $item->discount_product }}</td>
         <td>{{ $item->original_price }}</td>
         <td>{{ $item->price}}</td>
-        <td><a href="{{ route('edit-product') }}?id={{ $item->product_id }}"><button class="btn btn-warning">Edit</button></a></td>
+        <td><a href="{{ route("edit-product") }}?id={{$item->product_id}}"><button class="btn btn-warning">Edit</button></a></td>
         <td><button onclick="deleteProduct('{{ $item->product_id }}')" class="btn btn-danger">Delete</button></td>
       </tr>
       @endforeach
@@ -148,44 +156,47 @@
         </div>
         <div>
           <label for="discount">Discount (%)</label>
-          <input required type="number" step="0.01" id="discount" name="discount" value="{{ $edit? $discountUpdate : ''}}" class="form-control">
+          <input required type="number"  id="discount" name="discount" value="{{ $edit? $discountUpdate : ''}}" class="form-control">
         </div>
         <div>
           <label for="price">Price</label>
           <input required type="number" id="price" onfocus="" name="price" value="{{ $edit? $priceUpdate : ''}}" class="form-control">
         </div>
         <input type="submit" value="{{ $edit? 'Update' : 'Add'}}" class="btn btn-success myBtn"></input>
-          <input style="display: none;" id="dateTest" type="" name="" value="{{$edit? $expDateUpdate : ''}}"></input>
-        </form>
-      </div>
+        <input style="display: none;" id="dateTest" type="" name="" value="{{$edit? $expDateUpdate : ''}}"></input>
+      </form>
     </div>
-    
   </div>
 
-  @stop
-  @section('js')
-  <script src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
-  <script type="text/javascript">
-    $(function () {  
-      $("#datepicker").datepicker({         
-        autoclose: true,         
-        todayHighlight: true 
-      }).datepicker('setDate', $('#dateTest').val());
-    });
+</div>
 
-    $( "#originalPrice" ).change(function() {
-      $('#price').val(getPrice($('#originalPrice').val(),$('#discount').val()));
-    });
+@stop
+@section('js')
+<script src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
+<script type="text/javascript">
+  $(function () {  
+    $("#datepicker").datepicker({         
+      autoclose: true,         
+      todayHighlight: true 
+    }).datepicker('setDate', $('#dateTest').val());
+  });
 
-    $( "#discount" ).change(function() {
-      $('#price').val(getPrice($('#originalPrice').val(),$('#discount').val()));
-    });
+  $( "#originalPrice" ).change(function() {
+    $('#price').val(getPrice($('#originalPrice').val(),$('#discount').val()));
+  });
 
-    function getPrice(originalPrice, discount){
-      return parseInt(originalPrice) -  parseInt(originalPrice)*discount/100;
-    }
+  $( "#discount" ).change(function() {
+    $('#price').val(getPrice($('#originalPrice').val(),$('#discount').val()));
+  });
 
-    function deleteProduct(id){
+  function getPrice(originalPrice, discount){
+    return parseInt(originalPrice) -  parseInt(originalPrice)*discount/100;
+  }
+
+  function deleteProduct(id){
+
+    let result = confirm("Want to delete this product id = " + id + " ?");
+    if (result) {
       $.post("{{ route('delete-product') }}",
       {
         '_token' : $('[name=_token]').val(),
@@ -193,9 +204,9 @@
       },
       () => { 
         window.open('{{ route('product-manage') }}', '_self')
-      },
-      // (data) => { $('#fillterData').html(data);} // Hiển thị dữ liệu được chọn
+      }
       );
     }
-  </script>
-  @stop
+  }
+</script>
+@stop

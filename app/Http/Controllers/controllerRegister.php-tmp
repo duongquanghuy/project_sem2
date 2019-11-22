@@ -14,7 +14,9 @@ class controllerRegister extends Controller {
 				'password'      => 'required | min : 8 | max : 32',
 				'passwordAgain' => 'required | same:password',
 				'name'          => 'required | min : 3 | max : 32',
-				'level'         => 'required | numeric'
+				'level'         => 'required | numeric',
+				'birthDay'      => 'required',
+				'phone'         => 'required | numeric'
 			], [
 				'email.required'         => 'You must enter an email',
 				'email.email'            => 'Email invalidate',
@@ -28,13 +30,19 @@ class controllerRegister extends Controller {
 				'name.min'               => 'Name must be more than 8 characters',
 				'name.max'               => 'Name must be less than 32 characters',
 				'level.numeric'          => 'You must select position',
-				'level.required'         => 'You must select position'
+				'level.required'         => 'You must select position',
+				'birthDay.required'      => 'You must input your birthday',
+				'phone.required'         => 'You must enter your phone number',
+				'phone.numeric'          => 'You must enter valid phone number'
 			]);
-		$user           = new User;
-		$user->name     = $request->name;
-		$user->email    = $request->email;
-		$user->password = bcrypt($request->password);
-		$user->level    = $request->level;
+		$user               = new User;
+		$user->name         = $request->name;
+		$user->email        = $request->email;
+		$user->password     = bcrypt($request->password);
+		$user->level        = $request->level;
+		$user->birth_day    = $request->birthDay;
+		$user->phone_number = $request->phone;
+		$user->address      = $request->address;
 		$user->save();
 
 		return redirect('/admin/login')->with('status', 'Congratulations on your successful registration');

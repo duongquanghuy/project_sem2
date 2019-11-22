@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['prefix' => '/admin', 'middleware' => 'adminLogin'], function () {
+Route::group(['prefix' => '/admin'/*, 'middleware' => 'adminLogin'*/], function () {
 		Route::get('/test', function () {
 				return view('test');
 			})->name('test');
@@ -14,6 +14,13 @@ Route::group(['prefix' => '/admin', 'middleware' => 'adminLogin'], function () {
 
 		//employee
 		Route::get('/employee-manage', 'controllerEmployeeManage@showAll')->name('employee-manage');
+		Route::get('/employee-manage/edit', 'controllerEmployeeManage@editEmployee')->name('edit-employee');
+		Route::post('/employee-manage/update', 'controllerEmployeeManage@updateEmployee')->name('update-employee');
+		Route::post('/employee-manage/delete', 'controllerEmployeeManage@deleteEmployee')->name('delete-employee');
+
+		//sale
+		Route::get('/sales-statistic', 'controllerSalesStatistic@showAll')->name('sales-manage');
+		Route::post('/sales-statistic/search', 'controllerSalesStatistic@searchSales')->name('search-sales');
 
 		Route::get('/logout', 'controllerLogin@handlerLogout')->name('handler-logout');
 		Route::get('/register', function () {

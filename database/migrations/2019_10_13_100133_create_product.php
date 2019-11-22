@@ -21,7 +21,7 @@ class CreateProduct extends Migration
                     ->on('product_category');
             $table->string('product_name')->length(400);
             $table->string('link_img');
-            $table->boolean('exp_status');
+            $table->date('exp_date')->nullable();
             $table->integer('price');
             $table->double('quantity');
             $table->integer('original_price');
