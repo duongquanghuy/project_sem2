@@ -78,7 +78,7 @@
 </head>
 <body>
   <div>
-  <h2>Login Form</h2>
+  <h2>Login</h2>
   
   <form method="post" action=" {{ route('handler-login') }}">
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -119,7 +119,7 @@
   </div>
 
   <div class="container" style="background-color:#f1f1f1">
-    <button type="button" class="cancelbtn">Cancel</button>
+    <span>If you do not have an account, please contact the manager to register</span>
     <span class="psw">Forgot <a href="#">password?</a></span>
   </div>
 </form>
