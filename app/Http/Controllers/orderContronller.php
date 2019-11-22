@@ -70,7 +70,7 @@ class orderContronller extends Controller
         		'product_id'	   => $item->product_id,
         		'category_id' 	   => $item->category_id,
         		'product_name'     => $item->product_name,
-        		'exp_status'       => $item->exp_status,
+        		'exp_date'         => $item->exp_date,
         		'price'     	   => $item->price,
                 'discount_product' => $item->discount_product,
         	];
@@ -263,24 +263,22 @@ class orderContronller extends Controller
     }
 
    public function addProductOreder(Request $request){
-        $productID = $request->orde_product_id;
+        $productID = $request->order_product_id;
         $orderID = $request->fk_order_id;
 
-            $order = DB::table('order_details')
-                        ->join('product')
+            $data = DB::table('order_details')
                         ->where('fk_order_id',$orderID)
                         ->where('fk_product_id','=', $productID)
                         ->get();
+        return $data;
+            
+    }
+    public function checkProductID(Request $request){
+        $product_id = $request->order_product_id;
 
-            $product = DB::table('product')->where('product_id' , $productID)->get();
-            if ($order != '') {
-                    return $order;
-                }else{
-                    return $product;
-            }
-              
-        
+        $product = DB::table('product')->where('product_id' , $product_id)->get();
 
+        return $product;
     }
 
     public function addProductQuantityOreders(Request $request){

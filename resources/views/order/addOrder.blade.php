@@ -31,6 +31,9 @@
     #total{
       font-weight: 700;
     }
+    .customer-modal{
+      height: 230px;
+    }
   @media only screen and (max-width: 900px) {
     .modal-body-printorder{
       height: 100px;
@@ -148,9 +151,9 @@
         </button>
       </div>
         <!-- phan sua thong tin -->
-      <div class="modal-body">
+      <div class="modal-body customer-modal">
         <div class="form-group">
-             <input type="text" name="cus_id" id="cus-id">
+             <input style="display: none;" type="text" name="cus_id" id="cus-id">
          </div>
         <div class="form-group" >
 
@@ -294,7 +297,7 @@
     
         
         <div class="col-lg-11 col-md-12 ml-auto mr-auto">
-           <h4><small style="font-size: 16px">Simple With Actions</small></h4>
+           <h4><small style="font-size: 16px">Table Bill</small></h4>
           <div class="table-responsive">
               
               <table  class="table table-striped custab table-hover">
@@ -337,6 +340,8 @@
             var quantity = $('#quantity').val();
             var total = $('#total').val();
 
+            console.log(keycode);
+            console.log(product_id);
             //
         if(keycode == '13'){
              var vnf_regex = /^[A-Z0-9_-]{3,16}$/;

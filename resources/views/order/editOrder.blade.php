@@ -232,26 +232,44 @@
 		var fk_order_id = $('#fk_order_id').val();
 
 		function addPoduct(){
-      var orde_product_id = $('#orderProduct').val();
+      var orde_product_id_str = $('#orderProduct').val();
+      var order_product_id = orde_product_id_str.toUpperCase();
+      console.log(fk_order_id);
+      console.log(order_product_id);
       $.post('{{ route('addProductOreder') }}' ,{
                 "_token": "{{ csrf_token() }}",
-                 orde_product_id: orde_product_id,
+                 order_product_id: order_product_id,
                  fk_order_id: fk_order_id
            },function(data , status){
+                console.log(data);
                 if(data != '' && data.length > 0){
-                    alert('san pham da ton tai ban co the cap nhat so san pham muon sua')
-                    $('#exampleModalCenterProduct').modal({
-                                      keyboard: false
-                                 });
+                   
                     $.each(data ,  function(index, el) {
-                      $('#quantity-label').text(el.quantity_product);
-                      return false;
-                    });
-                }else{
-                    alert('them so luong cho san pham moi');
-                    $('#exampleModalCenterProduct').modal({
+                            alert('san pham da ton tai : '+ el.fk_product_id +' : ban co the cap nhat so san pham muon sua');
+                            $('#exampleModalCenterProduct').modal({
                                       keyboard: false
                                  });
+                            $('#quantity-label').text(el.quantity_product);
+                            return false;
+                    });
+                  
+                }else{
+                    $.post('{{ route('checkProductID') }}' ,{
+                          "_token": "{{ csrf_token() }}",
+                          order_product_id: order_product_id
+                          
+                      },function(data1 , status){
+                        console.log(data);
+                            if(data1 != '' && data1.length > 0){
+                                 alert('them so luong cho san pham moi');
+                                      $('#exampleModalCenterProduct').modal({
+                                      keyboard: false
+                                 });
+                            }else{
+                              alert('san pham ko ton tai');
+                            }
+
+                      });
                 }
            });
     }

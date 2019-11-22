@@ -42,6 +42,7 @@ Route::group(['prefix' => '/admin' , 'middleware' => 'adminLogin'], function () 
 		Route::get('/orders/serachDay', 'orderContronller@searchDaytime')->name('searchDaytime');
 		Route::get('/orders/edit', 'orderContronller@editOrderID')->name('editOrderID');
 		Route::post('/orders/editAddProduct', 'orderContronller@addProductOreder')->name('addProductOreder');
+		Route::post('/orders/checkproductorder', 'orderContronller@checkProductID')->name('checkProductID');
 		Route::post('/orders/editQuantity', 'orderContronller@addProductQuantityOreders')->name('addProductQuantityOreder');
 		Route::post('/orders/deleteOrder', 'orderContronller@deleteOrderID')->name('deleteOrderID');
 		Route::post('/orders/deleteProduct', 'orderContronller@deleteProductInOrder')->name('deleteProductInOrder');

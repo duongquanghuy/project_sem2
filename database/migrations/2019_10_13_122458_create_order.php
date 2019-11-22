@@ -17,7 +17,7 @@ class CreateOrder extends Migration
             $table->bigIncrements('order_id');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')
-                    ->references('user_id')
+                    ->references('id')
                     ->on('users');
             $table->unsignedBigInteger('customer_id_order');
             $table->foreign('customer_id_order')
